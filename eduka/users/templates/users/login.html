@@ -1,0 +1,77 @@
+<!-- LOGIN.HTML -->
+
+
+{% extends 'base.html' %}
+
+{% block content %}
+
+  <div class="container">
+
+      <h1 class="display-1">  Renseignez vos identifiants: </h1>
+
+
+      <div class="row">
+        {% if error %}<p class=error><strong>Error:</strong> {{ error }}{% endif %}
+
+      </div>
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        <!-- Categories: success (green), info (blue), warning (yellow), danger (red) -->
+          {% if messages %}
+            {% for category, message in messages %}
+            <div class="alert alert-{{ category }} alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <!-- <strong>Title</strong> --> {{ message }}
+            </div>
+            {% endfor %}
+          {% endif %}
+        {% endwith %}
+
+      <form  method="POST">
+
+        {# This hidden_tag is a CSRF security feature. #}
+        {{ form.hidden_tag() }}
+
+        <div class="form-group">
+          {{ form.email.label() }}
+          {{ form.email(class="form-control") }}
+          <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+        </div>
+
+        <div class="form-group">
+          {{ form.password.label() }}
+
+          {{ form.password(class="form-control") }}
+          <small id="emailHelp" class="form-text text-muted">8 characters min.</small>
+        </div>
+
+        <div class="form-group form-check">
+          {{ form.remember(class="form-check-input") }}
+          {{ form.remember.label()}}
+        </div>
+
+
+
+        {{ form.submit(class='btn btn-primary btn-lg') }}
+
+        <div class="form-group mt-3">
+          <small class="text-muted ">
+              <a href="{{ url_for('users.forgot_pwd') }}">Mot de passe oublié?</a>
+          </small>
+
+        </div>
+
+
+
+
+
+      </form>
+
+
+
+
+  </div>
+
+
+
+{% endblock %}

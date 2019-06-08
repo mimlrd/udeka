@@ -1,0 +1,60 @@
+<!-- REGISTER.HTML -->
+
+{% extends 'base.html' %}
+
+{% block content %}
+
+  <div class="container">
+
+      <h1 class="display-1">  Je crée mon compte : </h1>
+
+
+      <div class="row">
+        {% if error %}<p class=error><strong>Error:</strong> {{ error }}{% endif %}
+
+      </div>
+
+      <form  method="POST">
+
+        {# This hidden_tag is a CSRF security feature. #}
+        {{ form.hidden_tag() }}
+
+        <div class="form-group">
+          {{ form.username.label() }}
+          {{ form.username(class="form-control") }}
+          <small id="emailHelp" class="form-text text-muted">Choose a plaisant username</small>
+        </div>
+
+        <div class="form-group">
+          {{ form.email.label() }}
+          {{ form.email(class="form-control") }}
+          <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+        </div>
+
+        <div class="form-group">
+          {{ form.password.label() }}
+          {{ form.password(class="form-control") }}
+          <small id="emailHelp" class="form-text text-muted">8 characters min.</small>
+        </div>
+
+        <div class="form-group">
+          {{ form.re_password.label() }}
+          {{ form.re_password(class="form-control") }}
+          <small id="emailHelp" class="form-text text-muted">Re-type your password!</small>
+        </div>
+
+
+        {{ form.submit(class='btn btn-primary btn-lg') }}
+
+
+
+      </form>
+
+
+
+
+  </div>
+
+
+
+{% endblock %}

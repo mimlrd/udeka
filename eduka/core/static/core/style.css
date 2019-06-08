@@ -1,0 +1,61 @@
+/** CSS FILE: Main **/
+
+
+
+*,
+*::after,
+*::before {
+  margin: 0;
+  padding: 0;
+  box-sizing: inherit;
+  /* for the marging & padding not to be added to the border size */ }
+
+html {
+  /** to create inheritance for the subsequent children of the html **/
+  /***
+     - Get the font size, so the user could adjust in the settings of their browser
+     - The following font size will serve as a  the root measurement for all the children as we will use rem.
+    ***/
+  font-size: 62.5%; }
+
+/* set the key paramaters in the body for inheritance */
+body {
+  box-sizing: border-box; }
+
+/** body typograpgy **/
+/* set the key paramaters in the body for inheritance */
+body {
+  font-family: "Lato", sans-serif;
+  font-weight: 400;
+  /**font-size: 1.6rem; **/
+  line-height: 1.7;
+  color: #777;
+  /* to set the color of the text */
+  padding: 3rem; }
+
+.paragraph {
+    font-size: 1.6rem; }
+
+.paragraph:not(:last-child) {
+      margin-bottom: 2rem; }
+
+.u-center-text {
+    text-align: center; }
+
+.u-margin-bottom-big {
+    margin-bottom: 8rem; }
+
+.u-margin-bottom-medium {
+    margin-bottom: 4rem; }
+
+.u-margin-bottom-small {
+    margin-bottom: 2rem; }
+
+.u-margin-top-big {
+    margin-bottom: 8rem; }
+
+.u-margin-top-medium {
+    margin-bottom: 4rem; }
+
+.u-margin-top-small {
+    margin-bottom: 2rem; }

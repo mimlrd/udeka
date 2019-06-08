@@ -1,0 +1,60 @@
+<!-- UPDATE ACCOUNT -->
+
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container">
+  <div class="row">
+    <div class="col-sm-4 mt-4">
+      <div class="card" style="width: 80%;">
+        <img class="card-img-top" src="{{ user.profile_image_link }}" alt="Card image cap">
+        <div class="card-body">
+          <h5 class="card-title">{{ user.username }}</h5>
+          <h6 class="card-subtitle mb-2 text-muted">{{ user.email }}</h6>
+          <p class="card-text">{{ user.bio }}</p>
+          <a href="#" class="btn btn-primary">Mis à jour</a>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- RIGHT SIDE COLUMN -->
+    <div class="col-sm-8 mt-4">
+      <h3 class="display-4 mb-4"> Mes postes</h3>
+
+      <div class="card-columns">
+
+        {% for post in posts %}
+
+        <a href="{{ url_for('posts.show_post',post_id=post.id)}}"  style="text-decoration: none;">
+
+        <div class="card">
+          <img class="card-img-top" src="{{ post.post_image_link }}" alt="Card image cap">
+          <div class="card-body">
+            <h5 class="card-title"> {{ post.title }}</h5>
+            <p class="card-text">{{ post.summary|truncate(70, True)|safe }}</p>
+            <p class="card-text"><small class="text-muted">{{ post.date_posted }}</small></p>
+          </div>
+        </div>
+
+        </a>
+
+
+
+        {% endfor %}
+
+
+
+      </div>
+
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+{% endblock %}
