@@ -22,3 +22,5 @@ $ pip install -r requirements.txt
 $ python app.py
 ```
 The website should be running in your local network, so probably ```localhost:5000.```
+
+PS: In case that you have some trouble with the git pull, see this [website](https://stackoverflow.com/questions/11696295/rejected-master-master-non-fast-forward)
