@@ -8,13 +8,13 @@ Get the source code using the following:
 
 $ git clone https://github.com/parleychat/udeka.git
 
-You will need to create a virtual environment:
+You will need to create a virtual environment (for Mac users):
 
 ```
 $ mkdir Environments
 $ cd Environments
 $ virtualenv <env_name>
-$ <env_name>\Scripts\activate
+$ source <env_name>/bin/activate
 (Replace env_name with whatever you want to call it)
 ```
 
