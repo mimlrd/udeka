@@ -11,6 +11,8 @@ $ git clone https://github.com/parleychat/udeka.git
 You will need to create a virtual environment:
 
 ```
+$ mkdir Environments
+$ cd Environments
 $ virtualenv <env_name>
 $ <env_name>\Scripts\activate
 (Replace env_name with whatever you want to call it)
