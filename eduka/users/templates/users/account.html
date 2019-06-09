@@ -34,7 +34,9 @@
           <div class="card-body">
             <h5 class="card-title"> {{ post.title }}</h5>
             <p class="card-text">{{ post.summary|truncate(70, True)|safe }}</p>
-            <p class="card-text"><small class="text-muted">{{ post.date_posted }}</small></p>
+            <p class="card-text">
+              <small class="text-muted">{{ post.date_posted|format_date }}</small>
+            </p>
           </div>
         </div>
 

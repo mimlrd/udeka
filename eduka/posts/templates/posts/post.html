@@ -54,7 +54,7 @@
 
           <h1 class="display-4">{{ post.title }}</h1>
 
-          <p class="card-text"><small class="text-muted">{{ post.date_posted }}</small></p>
+          <p class="card-text"><small class="text-muted">{{ post.date_posted | format_date }}</small></p>
 
           <p class="lead"> {{ post.summary }} </p>
 
