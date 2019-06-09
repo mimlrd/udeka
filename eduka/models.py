@@ -60,13 +60,14 @@ class Post(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     date_posted = db.Column(db.DateTime, index=True, default=dt.utcnow)
-    title = db.Column(db.String(200), unique=True, nullable=False)
+    title = db.Column(db.String(200), unique=False, nullable=False)
     summary = db.Column(db.Text(), nullable=False)
     date_start = db.Column(db.DateTime, default=dt.utcnow)
     ## need to find a way to automatically add 7 days to starte date as default
     date_end = db.Column(db.DateTime, default=dt.utcnow)
-    level_beg = db.Column(db.Integer, default=1)
-    level_end = db.Column(db.Integer, default=1)
+    level_beg = db.Column(db.Integer, default=0)
+    level_end = db.Column(db.Integer, default=0)
+    ## level ( 0- beginner, 1- intermediate, 2- Advance, 3- expert)
 
     ##---> Rename category - tags (might need to create own table Tag)
     ##---> tags need to be indexed, so users could search (query) easily by tag
@@ -111,7 +112,7 @@ class PostLink(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     link_title = db.Column(db.String(200), nullable=False)
-    link_url = db.Column(db.String(), unique=True, nullable=False)
+    link_url = db.Column(db.String(), unique=False, nullable=False)
     ## create the relation between the Posts Table with the Links table
     post_id = db.Column(db.Integer, db.ForeignKey('posts.id'), nullable=False)
 
