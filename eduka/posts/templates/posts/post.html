@@ -56,6 +56,11 @@
 
           <p class="card-text"><small class="text-muted">{{ post.date_posted | format_date }}</small></p>
 
+          {% if author.id == current_user.id %}
+          <a href="{{ url_for('posts.update_post', post_id=post.id) }}" class="btn btn-secondary"> Update</a>
+          <a href="#" class="btn btn-danger">Delete</a>
+          {% endif %}
+
           <p class="lead"> {{ post.summary }} </p>
 
           <!-- // show the post links and titles -->

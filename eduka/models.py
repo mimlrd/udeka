@@ -34,7 +34,7 @@ class User(db.Model, UserMixin):
 
     def __init__(self, email, username, pwd, bio=None, profile_image_link=None):
         self.email = email
-        self.username = username
+        self.username = username.lower()
         self.bio = bio
         self.profile_image_link = profile_image_link
         self.hash_password = generate_password_hash(pwd)

@@ -10,6 +10,7 @@ from eduka.models import User, Post, PostLink, PostView
 
 from eduka.utils.database_utils import (saving_post, saving_links,
                                         saving_views, update_nbr_views)
+from eduka.utils.other_utils import populate_form
 from datetime import datetime as dt
 
 posts_blueprint = Blueprint('posts',
@@ -92,7 +93,7 @@ def show_post(post_id):
     ## let get the post
 
     post = Post.query.get_or_404(post_id)
-    author = User.query.filter(User.id == post.user_id).first()
+    author = User.query.filter(User.id == post.user_id).first_or_404()
     postlinks = post.links
     views = 0
     ## check to see if the
@@ -130,7 +131,31 @@ def show_post(post_id):
 @posts_blueprint.route('/update/<int:post_id>')
 @login_required
 def update_post(post_id):
-    pass
+    form = AddPostForm()
+    post = Post.query.get_or_404(post_id)
+    nbr_links = len(post.links)
+
+    if current_user.id != post.user_id:
+        ## the if statement here, makes sure that only the author can update the post
+        print(f'current user id: {current_user.id}, post author id: {post.user_id}')
+        return redirect(url_for('posts.show_post', post_id=post.id))
+
+    ## fill the form with info from the post to update
+
+    form.post_title.data = post.title;
+    form.post_summary.data = post.summary;
+    form.start_date.data = post.date_start;
+    form.end_date.data = post.date_end;
+    form.start_level.data = post.level_beg;
+    form.end_level.data = post.level_end;
+    form.post_category.data = post.category
+    ## call the populate form from the utils module
+    populate_form(links=post.links, form=form)
+
+
+
+
+    return render_template('update_post.html', form=form, nbr_links=nbr_links)
 
 
 

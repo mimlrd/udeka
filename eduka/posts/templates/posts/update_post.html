@@ -1,0 +1,143 @@
+<!-- update_post.html -->
+
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container" style="width: 60%">
+
+    <h1 class="display-4 mt-4 mb-4">  Mettre à jour votre publication: </h1>
+
+
+    <div class="row">
+      {% if error %}<p class=error><strong>Error:</strong> {{ error }}{% endif %}
+    </div>
+
+    <form  method="POST">
+
+      {# This hidden_tag is a CSRF security feature. #}
+      {{ form.hidden_tag() }}
+
+      <div class="form-group">
+        {{ form.post_title.label() }}
+        {{ form.post_title(class="form-control") }}
+        <small id="emailHelp" class="form-text text-muted">Choose a plaisant username</small>
+      </div>
+
+      <div class="form-group">
+        {{ form.post_summary.label() }}
+        {{ form.post_summary(class="form-control") }}
+        <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+      </div>
+
+      <div class="form-group">
+        {{ form.start_date.label() }}
+        {{ form.start_date(class="form-control") }}
+        <small id="emailHelp" class="form-text text-muted">8 characters min.</small>
+      </div>
+
+      <div class="form-group">
+        {{ form.end_date.label() }}
+        {{ form.end_date(class="form-control") }}
+        <small id="emailHelp" class="form-text text-muted">Re-type your password!</small>
+      </div>
+
+      <div class="form-group">
+        {{ form.start_level.label() }}
+        {{ form.start_level(class="form-control") }}
+        <small id="emailHelp" class="form-text text-muted">Re-type your password!</small>
+      </div>
+
+      <div class="form-group">
+        {{ form.end_level.label() }}
+        {{ form.end_level(class="form-control") }}
+        <small id="emailHelp" class="form-text text-muted">Re-type your password!</small>
+      </div>
+
+      <div class="form-group">
+        {{ form.post_category.label() }}
+        {{ form.post_category(class="form-control") }}
+        <small id="emailHelp" class="form-text text-muted">Re-type your password!</small>
+      </div>
+
+
+
+      {# adding the links and title dynamicaly #}
+
+      {% for i in range(nbr_links) %}
+
+          {% if i == 0 %}
+
+          <figure class="alert alert-secondary">
+
+            <div class="form-group">
+              {{ form.link1_title.label() }}
+              {{ form.link1_title(class="form-control") }}
+              <small id="emailHelp" class="form-text text-muted">Re-type your password!</small>
+            </div>
+
+            <div class="form-group">
+              {{ form.link1.label() }}
+              {{ form.link1(class="form-control") }}
+              <small id="emailHelp" class="form-text text-muted">Re-type your password!</small>
+            </div>
+
+            </figure>
+
+
+          {% elif i == 1 %}
+          <figure class="alert alert-secondary">
+
+            <div class="form-group">
+              {{ form.link2_title.label() }}
+              {{ form.link2_title(class="form-control") }}
+              <small id="emailHelp" class="form-text text-muted">Re-type your password!</small>
+            </div>
+
+            <div class="form-group">
+              {{ form.link2.label() }}
+              {{ form.link2(class="form-control") }}
+              <small id="emailHelp" class="form-text text-muted">Re-type your password!</small>
+            </div>
+
+            </figure>
+
+
+          {% elif i == 2 %}
+          <figure class="alert alert-secondary">
+
+            <div class="form-group">
+              {{ form.link3_title.label() }}
+              {{ form.link3_title(class="form-control") }}
+              <small id="emailHelp" class="form-text text-muted">Re-type your password!</small>
+            </div>
+
+            <div class="form-group">
+              {{ form.link3.label() }}
+              {{ form.link3(class="form-control") }}
+              <small id="emailHelp" class="form-text text-muted">Re-type your password!</small>
+            </div>
+
+            </figure>
+
+          {% endif %}
+
+      {% endfor %}
+
+      {# ... end .. #}
+
+      {{ form.submit(class='btn btn-info btn-lg btn-block mt-3 mb-4') }}
+
+
+
+    </form>
+
+
+
+</div>
+
+
+
+
+
+{% endblock %}
