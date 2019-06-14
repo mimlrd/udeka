@@ -5,7 +5,9 @@ from flask import Blueprint, render_template, redirect, flash
 
 core_blueprint = Blueprint('core',
                             __name__,
-                            template_folder='templates/core')
+                            template_folder='templates/core',
+                            static_url_path='/core/static',
+                            static_folder='static')
 
 
 @core_blueprint.route('/')

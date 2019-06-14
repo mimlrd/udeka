@@ -8,7 +8,7 @@
 
 <div class="container" style="width: 60%">
 
-    <h1 class="display-4 mt-4" >  Écrire votre publication içi: </h1>
+    <h1 class="display-4 u-margin-top-medium" >  Écrire votre publication içi: </h1>
 
 
     <div class="row">
@@ -21,7 +21,7 @@
       {# This hidden_tag is a CSRF security feature. #}
       {{ form.hidden_tag() }}
 
-      <div class="form-group">
+      <div class="form-group u-margin-top-small">
         {{ form.post_title.label() }}
         {{ form.post_title(class="form-control") }}
         <small id="emailHelp" class="form-text text-muted">Choose a plaisant username</small>

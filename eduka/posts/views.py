@@ -128,7 +128,7 @@ def show_post(post_id):
 
 
 
-@posts_blueprint.route('/update/<int:post_id>')
+@posts_blueprint.route('/update/<int:post_id>',methods=['GET', 'POST'])
 @login_required
 def update_post(post_id):
     form = AddPostForm()
@@ -140,17 +140,10 @@ def update_post(post_id):
         print(f'current user id: {current_user.id}, post author id: {post.user_id}')
         return redirect(url_for('posts.show_post', post_id=post.id))
 
-    ## fill the form with info from the post to update
-
-    form.post_title.data = post.title;
-    form.post_summary.data = post.summary;
-    form.start_date.data = post.date_start;
-    form.end_date.data = post.date_end;
-    form.start_level.data = post.level_beg;
-    form.end_level.data = post.level_end;
-    form.post_category.data = post.category
     ## call the populate form from the utils module
-    populate_form(links=post.links, form=form)
+    populate_form(post=post, form=form)
+
+    ##
 
 
 

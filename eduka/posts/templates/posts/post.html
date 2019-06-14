@@ -5,17 +5,18 @@
 
 <!-- Banner image top -->
 
-    <div class="container-fluid mb-4 px-0">
-      <div class="row mx-0">
-        <div class="col-12 px-0">
-          <img src="{{ post.post_image_link }}" class="img-fluid w-100">
+    <section class="hero-section u-margin-bottom-small">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="u-center-text">
+            <!--<h5>Hello, world! Full width Hero-unit header</h5> -->
+          </div>
         </div>
       </div>
-    </div>
+    </section>
 
     <div class="container-fluid"  >
       <div class="row">
-
         <!-- LEFT COLUMN -->
         <div class="col-sm-2">
 
@@ -61,7 +62,7 @@
           <a href="#" class="btn btn-danger">Delete</a>
           {% endif %}
 
-          <p class="lead"> {{ post.summary }} </p>
+          <p class="lead mt-4 mb-4"> {{ post.summary }} </p>
 
           <!-- // show the post links and titles -->
 
