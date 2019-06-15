@@ -6,45 +6,80 @@
 
 <div class="container">
   <div class="row">
-    <div class="col-sm-4 mt-4">
-      <div class="card" style="width: 80%;">
-        <img class="card-img-top" src="{{ user.profile_image_link }}" alt="Card image cap">
-        <div class="card-body">
-          <h5 class="card-title">{{ user.username }}</h5>
-          <h6 class="card-subtitle mb-2 text-muted">{{ user.email }}</h6>
-          <p class="card-text">{{ user.bio }}</p>
-          <a href="#" class="btn btn-primary">Mis à jour</a>
-        </div>
-      </div>
+    <div class="columns">
 
-    </div>
+      <div class="column is-4">
+          <!-- LEFT SIDE COLUMN -->
+        <h3 class="title is-2"> Mon profile</h3>
 
-    <!-- RIGHT SIDE COLUMN -->
-    <div class="col-sm-8 mt-4">
-      <h3 class="display-4 mb-4"> Mes postes</h3>
+        <div class="card" style="width: 80%;">
+          <div class="card-image">
+            <figure class="image is-4by3">
+              <img src="{{ user.profile_image_link }}" alt="{{ user.username }}">
+            </figure>
+          </div>
 
-      <div class="card-columns">
+          <div class="card-content">
+            <div class="media">
+              <div class="media-left">
+                <figure class="image is-48x48">
+                  <img src="https://bulma.io/images/placeholders/96x96.png" alt="Placeholder image">
+                </figure>
+              </div>
+              <div class="media-content">
+                <p class="title is-4">{{ user.username }}</p>
+                <p class="subtitle is-6">{{ user.email }}</p>
+              </div>
+            </div>
 
-        {% for post in posts %}
-
-        <a href="{{ url_for('posts.show_post',post_id=post.id)}}"  style="text-decoration: none;">
-
-        <div class="card">
-          <img class="card-img-top" src="{{ post.post_image_link }}" alt="Card image cap">
-          <div class="card-body">
-            <h5 class="card-title"> {{ post.title }}</h5>
-            <p class="card-text">{{ post.summary|truncate(70, True)|safe }}</p>
-            <p class="card-text">
-              <small class="text-muted">{{ post.date_posted|format_date }}</small>
-            </p>
+            <div class="content">
+              <p class="subtitle is-6">{{ user.bio }}</p>
+            </div>
+            <a href="#" class="button is-primary is-outlined">Mis à jour</a>
           </div>
         </div>
-
-        </a>
-
+      </div>
 
 
-        {% endfor %}
+      <!-- RIGHT SIDE COLUMN -->
+      <div class="column is-8">
+        <h3 class="title is-2"> Mes postes</h3>
+
+
+          <div class="tile is-ancestor">
+            {% for post in posts %}
+            <div class="tile is-4 is-parent">
+              <div class="tile is-child">
+
+                <div class="card">
+                  <div class="card-image">
+                    <figure class="image is-4by3">
+                      <img src="{{ post.post_image_link }}" alt="Placeholder image">
+                    </figure>
+                  </div>
+                  <div class="card-content">
+                    <div class="media">
+                      <div class="media-content">
+                        <p class="title is-5">{{ post.title }}</p>
+                        <p class="subtitle is-6">{{ post.date_posted|format_date }}</p>
+                      </div>
+                    </div>
+
+                    <div class="content">
+                      {{ post.summary|truncate(70, True)|safe }}
+                    </div>
+                    <a href="{{ url_for('posts.show_post',post_id=post.id)}}" class="button is-primary issmall">Voir article</a>
+                  </div>
+                </div>
+
+              </div>
+
+            </div>
+            {% endfor %}
+          </div>
+
+
+
 
 
 
@@ -53,7 +88,7 @@
 
 
     </div>
-  </div>
+
 </div>
 
 

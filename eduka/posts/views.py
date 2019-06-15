@@ -137,16 +137,17 @@ def update_post(post_id):
 
     if current_user.id != post.user_id:
         ## the if statement here, makes sure that only the author can update the post
-        print(f'current user id: {current_user.id}, post author id: {post.user_id}')
+        ## print(f'current user id: {current_user.id}, post author id: {post.user_id}')
         return redirect(url_for('posts.show_post', post_id=post.id))
 
     ## call the populate form from the utils module
     populate_form(post=post, form=form)
 
-    ##
-
-
-
+    ##### check and submit the form #####
+    ## only update the content and title here
+    ## need to change the database relationships
+    if form.validate_on_submit():
+        pass
 
     return render_template('update_post.html', form=form, nbr_links=nbr_links)
 
