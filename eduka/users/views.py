@@ -104,11 +104,15 @@ def my_account(user_id):
     ## we need to to get the current_user Posts
 
     user = User.query.get_or_404(user_id)
-
-    posts = Post.query.filter_by(user_id=user_id).all()
-
-
-    return render_template('account.html', user=user, user_id=user.id, posts=posts,title=title)
+    ## get all posts for the user in a descending order
+    ## we could do it in one line, but prefer multiple
+    ## lines to minimise mistakes
+    p = Post.query.filter_by(user_id=user_id)
+    p_desc = p.order_by(Post.date_posted.desc())
+    posts = p_desc.all()
+    return render_template('account.html', user=user,
+                           user_id=user.id,
+                           posts=posts,title=title)
 
 
 

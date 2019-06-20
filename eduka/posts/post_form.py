@@ -31,16 +31,4 @@ class AddPostForm(FlaskForm):
     link1_title = StringField('ajouter un title pour le lien:')
     link1 = StringField('ajouter un lien:')
 
-    link2_title = StringField('ajouter un title pour le lien:')
-    link2 = StringField('ajouter un lien:')
-
-    link3_title = StringField('ajouter un title pour le lien:')
-    link3 = StringField('ajouter un lien:')
-
-    link4_title = StringField('ajouter un title pour le lien:')
-    link4 = StringField('ajouter un lien:')
-
-    link5_title = StringField('ajouter un title pour le lien:')
-    link5 = StringField('ajouter un lien:')
-
     submit = SubmitField('Ajouter')

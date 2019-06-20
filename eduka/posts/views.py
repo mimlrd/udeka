@@ -11,7 +11,7 @@ from eduka.models import User, Post, PostLink, PostView
 from eduka.utils.database_utils import (saving_post, saving_links,
                                         saving_views, update_nbr_views)
 from eduka.utils.other_utils import populate_form
-from datetime import datetime as dt
+from datetime import datetime as dt, timedelta
 
 posts_blueprint = Blueprint('posts',
                             __name__,
@@ -23,16 +23,22 @@ posts_blueprint = Blueprint('posts',
 def add_post():
 
     title = 'Écrire votre publication'
+    ## adding 7 days for the end date
+    seven_days = timedelta(days=7)
 
     form = AddPostForm()
 
     form.start_date.data = dt.now();
-    form.end_date.data = dt.now();
+    form.end_date.data = dt.now() + seven_days;
+
+
+    '''
 
     post_link_titles = [form.link1_title.data, form.link2_title.data,
                    form.link3_title.data, form.link4_title.data, form.link5_title.data];
     post_links = [form.link1.data, form.link2.data,
                    form.link3.data, form.link4.data, form.link5.data];
+    '''
 
 
     if form.validate():
@@ -46,16 +52,15 @@ def add_post():
 
         title = form.post_title.data;
         summary = form.post_summary.data;
-        start_date = dt.now();
+        start_date = form.start_date.data;
         end_date = form.end_date.data;
         level_beg = form.start_level.data;
         level_end = form.end_level.data;
         post_category = form.post_category.data
-        ## need the following info to save in the PostLink Table
-        post_link_titles = [form.link1_title.data, form.link2_title.data,
-                       form.link3_title.data, form.link4_title.data, form.link5_title.data];
-        post_links = [form.link1.data, form.link2.data,
-                       form.link3.data, form.link4.data, form.link5.data];
+
+        ## to get the links and titles
+        post_link_titles = request.form.getlist('link1_title');
+        post_links = request.form.getlist('link1')
 
         ## save the post without the links
         post = Post(title=title, summary=summary,
@@ -70,6 +75,8 @@ def add_post():
         saving_links(links=post_links, titles=post_link_titles, post_id=post.id)
         ## saving the number of views
         saving_views(post_id=post.id)
+
+
 
         ## empty the fieldsof the form
         form.post_title.data = '';
@@ -105,16 +112,12 @@ def show_post(post_id):
         ## adding number of views for the page
         saving_views(post_id=post.id)
 
-
     ## 1 - get the categorie
     ##2 - split the string into different
     tags_str = post.category
     tags = tags_str.split(",")
-
     ##print(f"tags: {tags}")
-
     title = post.title
-
 
     ## updated the database with the new number of views
     ## adding number of views for the page
@@ -134,6 +137,15 @@ def update_post(post_id):
     form = AddPostForm()
     post = Post.query.get_or_404(post_id)
     nbr_links = len(post.links)
+    print(post.links)
+
+    pr_links = []
+    pr_link_titles = []
+
+    for l in post.links:
+        pr_links.append(l.link_url)
+        pr_link_titles.append(l.link_title)
+
 
     if current_user.id != post.user_id:
         ## the if statement here, makes sure that only the author can update the post
@@ -147,9 +159,42 @@ def update_post(post_id):
     ## only update the content and title here
     ## need to change the database relationships
     if form.validate_on_submit():
-        pass
+        ''' saving the post '''
 
-    return render_template('update_post.html', form=form, nbr_links=nbr_links)
+        ## get the previous links
+        ## to avoid dupliacte links each time we update
+        ##pr_links_titles =
+
+
+        ## to get the links and titles
+        post_link_titles = request.form.getlist('link1_title');
+        post_links = request.form.getlist('link1')
+
+        ## save the post without the links
+        post.title = request.form['post_title']
+        post.summary = request.form['post_summary']
+        post.start_date = request.form['start_date']
+        post.end_date = request.form['end_date']
+        post.level_beg = request.form['start_level']
+        post.level_end = request.form['end_level']
+        post.category = request.form['post_category']
+        db.session.commit()
+
+
+        ## check to see if there have been changes
+
+        #######/!\ /!\ Need more changes
+        if pr_links != post_links or pr_link_titles != post_link_titles:
+
+            ## saving links
+            saving_links(links=post_links, titles=post_link_titles,
+                         post_id=post.id)
+        ### do a return to the post view page
+        return redirect(url_for('posts.show_post', post_id=post.id))
+
+
+    return render_template('update_post.html', form=form,
+                           nbr_links=nbr_links, post=post)
 
 
 

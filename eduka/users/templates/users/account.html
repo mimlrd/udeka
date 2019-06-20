@@ -4,92 +4,128 @@
 
 {% block content %}
 
-<div class="container">
-  <div class="row">
-    <div class="columns">
-
-      <div class="column is-4">
-          <!-- LEFT SIDE COLUMN -->
-        <h3 class="title is-2"> Mon profile</h3>
-
-        <div class="card" style="width: 80%;">
-          <div class="card-image">
-            <figure class="image is-4by3">
-              <img src="{{ user.profile_image_link }}" alt="{{ user.username }}">
+    <section class="hero is-prime-color">
+      <div class="hero-body">
+        <div class="container">
+          <!-- .media -->
+          <article class="media" >
+            <figure class="media-left">
+              <p class="image is-64x64">
+                <img class="is-rounded" src="{{ user.profile_image_link }}">
+              </p>
             </figure>
-          </div>
-
-          <div class="card-content">
-            <div class="media">
-              <div class="media-left">
-                <figure class="image is-48x48">
-                  <img src="https://bulma.io/images/placeholders/96x96.png" alt="Placeholder image">
-                </figure>
+            <div class="media-content" style="max-width:40%">
+              <div class="content">
+                <p>
+                  <strong>{{ user.username }}</strong> <small>@{{ user.username }}</small>
+                  <br>
+                    {{ user.bio }}
+                </p>
               </div>
-              <div class="media-content">
-                <p class="title is-4">{{ user.username }}</p>
-                <p class="subtitle is-6">{{ user.email }}</p>
-              </div>
+              <nav class="level is-mobile">
+                <div class="level-left">
+                  {% if current_user.id == user.id %}
+                  <a class="level-item">
+                    <span class="icon is-small"><i class="fas fa-user-edit"></i></span>
+                  </a>
+                  {% endif %}
+                  <a class="level-item">
+                    <span class="icon is-small"><i class="fas fa-heart"></i></span>
+                  </a>
+                  <p class="level-item">collections: {{ posts|length }}</p>
+                </div>
+              </nav>
             </div>
 
-            <div class="content">
-              <p class="subtitle is-6">{{ user.bio }}</p>
+            {# right side to add info such as nbr collection, nbr like, etc #}
+
+            <div class="media-right">
+              <button class="delete"></button>
             </div>
-            <a href="#" class="button is-primary is-outlined">Mis à jour</a>
-          </div>
+          </article>
+          <!-- /.media -->
         </div>
       </div>
 
 
-      <!-- RIGHT SIDE COLUMN -->
-      <div class="column is-8">
-        <h3 class="title is-2"> Mes postes</h3>
+
+    </section>
 
 
-          <div class="tile is-ancestor">
-            {% for post in posts %}
-            <div class="tile is-4 is-parent">
-              <div class="tile is-child">
+    <section class="section">
 
-                <div class="card">
-                  <div class="card-image">
-                    <figure class="image is-4by3">
-                      <img src="{{ post.post_image_link }}" alt="Placeholder image">
-                    </figure>
-                  </div>
-                  <div class="card-content">
-                    <div class="media">
-                      <div class="media-content">
-                        <p class="title is-5">{{ post.title }}</p>
-                        <p class="subtitle is-6">{{ post.date_posted|format_date }}</p>
-                      </div>
-                    </div>
+      <div class="container">
+        <div class="row">
+          <div class="columns">
 
-                    <div class="content">
-                      {{ post.summary|truncate(70, True)|safe }}
-                    </div>
-                    <a href="{{ url_for('posts.show_post',post_id=post.id)}}" class="button is-primary issmall">Voir article</a>
-                  </div>
+            <div class="column is-4-widescreen">
+              {# LEFT SIDE #}
+              <section class="section">
+                <h3 class="title is-3"> Filtrer par:</h3>
+                {# start of the card - need to change this for a table #}
+                <div class="menu">
+                  <ul class="menu-list">
+                    <li> <a href="#" class="is-active">All</a> </li>
+                    <li> <a href="#">Python</a> </li>
+                    <li> <a  href="#">Javascript</a> </li>
+                    <li> <a href="#">Flask</a> </li>
+                    <li> <a href="#">Git</a> </li>
+                  </ul>
                 </div>
 
-              </div>
+              </section>
+            </div>
+
+
+            {# RIGHT SIDE #}
+            <div class="column is-8">
+              <section class="section">
+                <h3 class="title is-3"> Mes collections</h3>
+                {# we will dive the different colums#}
+                <div class="columns is-multiline">
+                  {# start the for loop to get all the posts #}
+                  {% for post in posts %}
+                    <div class="column is-one-third">
+                      {# start of the card #}
+                      <div class="card">
+                        <div class="card-image">
+                          <figure class="image is-4by3">
+                            <img src="{{ post.post_image_link }}" alt="Placeholder image">
+                          </figure>
+                        </div>
+                        <div class="card-content">
+                          <div class="media">
+                            <div class="media-content">
+                              <p class="title is-5">{{ post.title }}</p>
+                              <p class="subtitle is-6">{{ post.date_posted|format_date }}</p>
+                            </div>
+                          </div>
+
+                          <div class="content">
+                            {{ post.summary|truncate(70, True)|safe }}
+                          </div>
+                          <a href="{{ url_for('posts.show_post',post_id=post.id)}}" class="button is-primary issmall">Voir collection</a>
+                        </div>
+                      </div>
+                      {# end of the card #}
+                    </div>
+                  {% endfor %}
+
+                </div>
+
+              </section>
 
             </div>
-            {% endfor %}
+
           </div>
-
-
-
-
-
 
       </div>
 
 
+    </section>
+    
 
-    </div>
 
-</div>
 
 
 

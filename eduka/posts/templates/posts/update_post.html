@@ -4,137 +4,208 @@
 
 {% block content %}
 
-<div class="container" style="width: 60%">
-
-    <h1 class="display-4 mt-4 mb-4">  Mettre à jour votre publication: </h1>
-
-
-    <div class="row">
-      {% if error %}<p class=error><strong>Error:</strong> {{ error }}{% endif %}
-    </div>
-
-    <form  method="POST">
-
-      {# This hidden_tag is a CSRF security feature. #}
-      {{ form.hidden_tag() }}
-
-      <div class="form-group">
-        {{ form.post_title.label() }}
-        {{ form.post_title(class="form-control") }}
-        <small id="emailHelp" class="form-text text-muted">Choose a plaisant username</small>
+    <section class="hero is-warning">
+      <div class="hero-body">
+        <div class="container">
+          <h1 class="title">Mettre à jour votre publication:</h1>
+          <h2 class="subtitle">Mettre à jour très facilement une collection en éditant son contenue.</h2>
+        </div>
       </div>
+    </section>
 
-      <div class="form-group">
-        {{ form.post_summary.label() }}
-        {{ form.post_summary(class="form-control") }}
-        <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
-      </div>
+    <section class="section">
+      <div class="container" style="width: 60%">
+          <div class="row">
+            {% if error %}<p class=error><strong>Error:</strong> {{ error }}{% endif %}
+          </div>
 
-      <div class="form-group">
-        {{ form.start_date.label() }}
-        {{ form.start_date(class="form-control") }}
-        <small id="emailHelp" class="form-text text-muted">8 characters min.</small>
-      </div>
+          <form  method="POST">
 
-      <div class="form-group">
-        {{ form.end_date.label() }}
-        {{ form.end_date(class="form-control") }}
-        <small id="emailHelp" class="form-text text-muted">Re-type your password!</small>
-      </div>
+            {# This hidden_tag is a CSRF security feature. #}
+            {{ form.hidden_tag() }}
 
-      <div class="form-group">
-        {{ form.start_level.label() }}
-        {{ form.start_level(class="form-control") }}
-        <small id="emailHelp" class="form-text text-muted">Re-type your password!</small>
-      </div>
-
-      <div class="form-group">
-        {{ form.end_level.label() }}
-        {{ form.end_level(class="form-control") }}
-        <small id="emailHelp" class="form-text text-muted">Re-type your password!</small>
-      </div>
-
-      <div class="form-group">
-        {{ form.post_category.label() }}
-        {{ form.post_category(class="form-control") }}
-        <small id="emailHelp" class="form-text text-muted">Re-type your password!</small>
-      </div>
-
-
-
-      {# adding the links and title dynamicaly #}
-
-      {% for i in range(nbr_links) %}
-
-          {% if i == 0 %}
-
-          <figure class="alert alert-secondary">
-
-            <div class="form-group">
-              {{ form.link1_title.label() }}
-              {{ form.link1_title(class="form-control") }}
-              <small id="emailHelp" class="form-text text-muted">Re-type your password!</small>
+            <div class="field">
+              {{ form.post_title.label(class="label") }}
+              <div class="control has-icons-left has-icons-right">
+                {{ form.post_title(class="input", placeholder="Titre de la publication") }}
+                <span class="icon is-small is-left">
+                  <i class="fas fa-user"></i>
+                </span>
+                <span class="icon is-small is-right">
+                  <i class="fas fa-check"></i>
+                </span>
+              </div>
+              <p class="help is-success">Donner un titre à votre publication</p>
             </div>
 
-            <div class="form-group">
-              {{ form.link1.label() }}
-              {{ form.link1(class="form-control") }}
-              <small id="emailHelp" class="form-text text-muted">Re-type your password!</small>
+            <div class="field">
+              {{ form.post_summary.label(class="label") }}
+              <div class="control">
+                {{ form.post_summary(class="textarea", placeholder="Un bref résumé de votre publication") }}
+              </div>
+              <p class="help is-success">Donner un titre à votre publication</p>
             </div>
 
-            </figure>
+            <!-- Dates -->
+
+              <div class="field">
+                {{ form.start_date.label(class="label") }}
+                <div class="control has-icons-left has-icons-right">
+                  {{ form.start_date(class="input", type="date") }}
+                  <span class="icon is-small is-left">
+                    <i class="fas fa-calendar-alt"></i>
+                  </span>
+                </div>
+                <p class="help is-success">Choisissez une date de début</p>
+              </div>
 
 
-          {% elif i == 1 %}
-          <figure class="alert alert-secondary">
-
-            <div class="form-group">
-              {{ form.link2_title.label() }}
-              {{ form.link2_title(class="form-control") }}
-              <small id="emailHelp" class="form-text text-muted">Re-type your password!</small>
-            </div>
-
-            <div class="form-group">
-              {{ form.link2.label() }}
-              {{ form.link2(class="form-control") }}
-              <small id="emailHelp" class="form-text text-muted">Re-type your password!</small>
-            </div>
-
-            </figure>
+              <div class="field">
+                {{ form.end_date.label(class="label") }}
+                <div class="control has-icons-left has-icons-right">
+                  {{ form.end_date(class="input", type="date") }}
+                  <span class="icon is-small is-left">
+                    <i class="fas fa-calendar-alt"></i>
+                  </span>
+                </div>
+                <p class="help is-success">Choisissez une date de fin</p>
+              </div>
 
 
-          {% elif i == 2 %}
-          <figure class="alert alert-secondary">
-
-            <div class="form-group">
-              {{ form.link3_title.label() }}
-              {{ form.link3_title(class="form-control") }}
-              <small id="emailHelp" class="form-text text-muted">Re-type your password!</small>
-            </div>
-
-            <div class="form-group">
-              {{ form.link3.label() }}
-              {{ form.link3(class="form-control") }}
-              <small id="emailHelp" class="form-text text-muted">Re-type your password!</small>
-            </div>
-
-            </figure>
-
-          {% endif %}
-
-      {% endfor %}
-
-      {# ... end .. #}
-
-      {{ form.submit(class='btn btn-info btn-lg btn-block mt-3 mb-4') }}
+              <!-- Select Level -->
+              <div class="field">
+                {{ form.start_level.label(class="label") }}
+                <div class="control">
+                  {{ form.start_level(class="input", type="select") }}
+                </div>
+                <p class="help is-success">Votre niveau de commencement</p>
+              </div>
 
 
+              <div class="field">
+                {{ form.end_level.label(class="label") }}
+                <div class="control">
+                  {{ form.end_level(class="input", type="select") }}
+                </div>
+                <p class="help is-success">Le niveau que vous espérez avoir à la fin.</p>
+              </div>
 
-    </form>
+              <!-- Choose a category for the post -->
+              <div class="field">
+                {{ form.post_category.label(class="label") }}
+                <div class="control has-icons-left has-icons-right">
+                  {{ form.post_category(class="input", placeholder="python, sqlalchemy, flask") }}
+                  <span class="icon is-small is-left">
+                    <i class="fas fa-tag"></i>
+                  </span>
+                </div>
+                <p class="help is-success">Chaque categorie doit etre séparer par une virgule</p>
+              </div>
+              {# div for the links - only add div if there are links to show #}
+
+              {% if nbr_links > 0 %}
+
+              {# user will need to click on the button to see links #}
+              <!--- Update links and titles -->
+              <h1 class="subtitle is-4">Voir tous vos liens</h1>
+              <div id="show-links-wrapper">
+
+                {# Links start here #}
+                <!-- Add links to the post -->
+                {% for l in post.links %}
+                <figure class="notification">
+          					<a class="button is-text" id='remove_field_button'>
+          						<span class="icon">
+          							<i class="far fa-trash-alt"></i>
+          						</span>
+          						<span>Retirer</span>
+          					</a>
+          					<hr class="hr-dotted">
+
+          					<label class="label" for="link1_title">ajouter un title pour le lien:</label>
+          					<div class="control has-icons-left has-icons-right">
+          						<input class="input" id="link1_title" name="link1_title" placeholder="Titre du lien" type="text" value="{{l.link_title}}">
+          						<span class="icon is-small is-left">
+          							<i class="fas fa-heading"></i>
+          						</span>
+          					</div>
+          					<p class="help is-success">Donner un titre pour reconnaitre le lien facilement</p>
+
+          				<div class="field">
+          					<label class="label" for="link1">ajouter un lien:</label>
+          					<div class="control has-icons-left has-icons-right">
+          						<input class="input" id="link1" name="link1" placeholder="Le lien" type="text" value="{{ l.link_url }}">
+          						<span class="icon is-small is-left">
+          							<i class="fas fa-link"></i>
+          						</span>
+          					</div>
+          					<p class="help is-success">Donner un titre pour reconnaitre le lien facilement</p>
+          			</figure>
+
+                {% endfor %}
+
+                {# Links ends here#}
+              </div>
+
+
+                <div class="btn_show_field">
+                  <hr class="hr-dotted">
+                  <a id='show_links_btn' onclick="showLinks()">
+                    <span class="icon">
+                      <i class="fas fa-plus"></i>
+                    </span>
+                    <span>Cliquer pour voir les liens</span>
+                  </a>
+                  <hr class="hr-dotted">
+                </div>
+
+              {% endif %}
 
 
 
-</div>
+            {# wrapper to add the links field #}
+              <h1 class="subtitle is-4">Ajouter d'autres liens</h1>
+              <div id="update_fields_wrap">
+              </div>
+
+            {# adding the links and title dynamicaly #}
+            {# user will need to click on the button to update links #}
+            <!--- Update links and titles -->
+              <div class="btn_add_field">
+                <hr class="hr-dotted">
+                <a id='update_links_btn'>
+                  <span class="icon">
+                    <i class="fas fa-plus"></i>
+                  </span>
+                  <span>Ajouter un nouveau lien</span>
+                </a>
+                <hr class="hr-dotted">
+              </div>
+
+            {{ form.submit(class='button is-primary') }}
+
+
+          </form>
+
+
+
+      </div>
+
+
+
+    </section>
+     {# need to add this to a separate js file #}
+    <script>
+      function showLinks() {
+        var x = document.getElementById("show-links-wrapper");
+        if (x.style.display === "none") {
+          x.style.display = "block";
+        } else {
+          x.style.display = "none";
+        }
+      }
+    </script>
+
 
 
 

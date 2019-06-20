@@ -6,123 +6,170 @@
 
 {% block content %}
 
-<div class="container" style="width: 60%">
-
-    <h1 class="display-4 u-margin-top-medium" >  Écrire votre publication içi: </h1>
 
 
-    <div class="row">
-      {% if error %}<p class=error><strong>Error:</strong> {{ error }}{% endif %}
+    <section class="hero is-prime-color">
+      <div class="hero-body">
+        <div class="container">
+          <h1 class="title">Écrire votre publication içi:</h1>
+          <h2 class="subtitle">Collectionner et organiser autour d'un sujet, tout simplement.</h2>
+        </div>
+      </div>
+    </section>
 
-    </div>
+    <section class="section">
+      <div class="container" style="width: 60%">
 
-    <form  method="POST">
+      <!-- <h1 class="title is-2" >  Écrire votre publication içi: </h1> -->
 
-      {# This hidden_tag is a CSRF security feature. #}
-      {{ form.hidden_tag() }}
+      <div class="row">
+        {% if error %}<p class=error><strong>Error:</strong> {{ error }}{% endif %}
 
-      <div class="form-group u-margin-top-small">
-        {{ form.post_title.label() }}
-        {{ form.post_title(class="form-control") }}
-        <small id="emailHelp" class="form-text text-muted">Choose a plaisant username</small>
       </div>
 
-      <div class="form-group">
-        {{ form.post_summary.label() }}
-        {{ form.post_summary(class="form-control") }}
-        <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
-      </div>
+      <form  method="POST">
 
-      <div class="form-group">
-        {{ form.start_date.label() }}
-        {{ form.start_date(class="form-control") }}
-        <small id="emailHelp" class="form-text text-muted">8 characters min.</small>
-      </div>
+        {# This hidden_tag is a CSRF security feature. #}
+        {{ form.hidden_tag() }}
 
-      <div class="form-group">
-        {{ form.end_date.label() }}
-        {{ form.end_date(class="form-control") }}
-        <small id="emailHelp" class="form-text text-muted">Re-type your password!</small>
-      </div>
-
-      <div class="form-group">
-        {{ form.start_level.label() }}
-        {{ form.start_level(class="form-control") }}
-        <small id="emailHelp" class="form-text text-muted">Re-type your password!</small>
-      </div>
-
-      <div class="form-group">
-        {{ form.end_level.label() }}
-        {{ form.end_level(class="form-control") }}
-        <small id="emailHelp" class="form-text text-muted">Re-type your password!</small>
-      </div>
-
-      <div class="form-group">
-        {{ form.post_category.label() }}
-        {{ form.post_category(class="form-control") }}
-        <small id="emailHelp" class="form-text text-muted">Re-type your password!</small>
-      </div>
-
-      <figure class="alert alert-secondary">
-
-        <div class="form-group">
-          {{ form.link1_title.label() }}
-          {{ form.link1_title(class="form-control") }}
-          <small id="emailHelp" class="form-text text-muted">Ajouter un titre à votre lien.</small>
+        <div class="field">
+          {{ form.post_title.label(class="label") }}
+          <div class="control has-icons-left has-icons-right">
+            {{ form.post_title(class="input", placeholder="Titre de la publication") }}
+            <span class="icon is-small is-left">
+              <i class="fas fa-user"></i>
+            </span>
+            <span class="icon is-small is-right">
+              <i class="fas fa-check"></i>
+            </span>
+          </div>
+          <p class="help is-success">Donner un titre à votre publication</p>
         </div>
 
-        <div class="form-group">
-          {{ form.link1.label() }}
-          {{ form.link1(class="form-control") }}
-          <small id="emailHelp" class="form-text text-muted">Ajouter le lien ici.</small>
+        <div class="field">
+          {{ form.post_summary.label(class="label") }}
+          <div class="control">
+            {{ form.post_summary(class="textarea", placeholder="Un bref résumé de votre publication") }}
+          </div>
+          <p class="help is-success">Donner un titre à votre publication</p>
         </div>
 
-        <a href="" class="btn btn-secondary" id="ajout-lien1"> ajouter un autre lien</a>
+      <!-- Dates -->
+
+        <div class="field">
+          {{ form.start_date.label(class="label") }}
+          <div class="control has-icons-left has-icons-right">
+            {{ form.start_date(class="input", type="date") }}
+            <span class="icon is-small is-left">
+              <i class="fas fa-calendar-alt"></i>
+            </span>
+          </div>
+          <p class="help is-success">Choisissez une date de début</p>
+        </div>
 
 
-      </figure>
+        <div class="field">
+          {{ form.end_date.label(class="label") }}
+          <div class="control has-icons-left has-icons-right">
+            {{ form.end_date(class="input", type="date") }}
+            <span class="icon is-small is-left">
+              <i class="fas fa-calendar-alt"></i>
+            </span>
+          </div>
+          <p class="help is-success">Choisissez une date de fin</p>
+        </div>
+
+
+        <!-- Select Level -->
+        <div class="field">
+          {{ form.start_level.label(class="label") }}
+          <div class="control">
+            {{ form.start_level(class="input", type="select") }}
+          </div>
+          <p class="help is-success">Votre niveau de commencement</p>
+        </div>
+
+
+        <div class="field">
+          {{ form.end_level.label(class="label") }}
+          <div class="control">
+            {{ form.end_level(class="input", type="select") }}
+          </div>
+          <p class="help is-success">Le niveau que vous espérez avoir à la fin.</p>
+        </div>
+
+
+        <!-- Choose a category for the post -->
+        <div class="field">
+          {{ form.post_category.label(class="label") }}
+          <div class="control has-icons-left has-icons-right">
+            {{ form.post_category(class="input", placeholder="python, sqlalchemy, flask") }}
+            <span class="icon is-small is-left">
+              <i class="fas fa-tag"></i>
+            </span>
+          </div>
+          <p class="help is-success">Chaque categorie doit etre séparer par une virgule</p>
+        </div>
+
+
+        <!-- Add links to the post -->
+        <div class="u-margin-bottom-small">
+          <h2 class="title is-4" >  Ajouter un lien à votre publication: </h2>
+        </div>
+
+        <figure class="notification">
+
+            <div class="field">
+              {{ form.link1_title.label(class="label") }}
+              <div class="control has-icons-left has-icons-right">
+                {{ form.link1_title(class="input", placeholder="Titre du lien") }}
+                <span class="icon is-small is-left">
+                  <i class="fas fa-heading"></i>
+                </span>
+              </div>
+              <p class="help is-success">Donner un titre pour reconnaitre le lien facilement</p>
+            </div>
+
+            <div class="field">
+              {{ form.link1.label(class="label") }}
+              <div class="control has-icons-left has-icons-right">
+                {{ form.link1(class="input", placeholder="Le lien") }}
+                <span class="icon is-small is-left">
+                  <i class="fas fa-link"></i>
+                </span>
+              </div>
+              <p class="help is-success">Donner un titre pour reconnaitre le lien facilement</p>
+            </div>
+
+        </figure>
+
+        <div id="input_fields_wrap">
+        </div>
 
 
 
-      <!--
-
-      <div class="form-group">
-        {{ form.link2_title.label() }}
-        {{ form.link2_title(class="form-control") }}
-        <small id="emailHelp" class="form-text text-muted">Ajouter un titre à votre lien.</small>
-      </div>
-
-      <div class="form-group">
-        {{ form.link2.label() }}
-        {{ form.link2(class="form-control") }}
-        <small id="emailHelp" class="form-text text-muted">Ajouter le lien ici.</small>
-      </div>
-
-      <div class="form-group">
-        {{ form.link3_title.label() }}
-        {{ form.link3_title(class="form-control") }}
-        <small id="emailHelp" class="form-text text-muted">Ajouter un titre à votre lien.</small>
-      </div>
-
-      <div class="form-group">
-        {{ form.link3.label() }}
-        {{ form.link3(class="form-control") }}
-        <small id="emailHelp" class="form-text text-muted">Ajouter le lien ici.</small>
-      </div>
-
-      -->
+        <div id="btn_field">
+          <hr class="hr-dotted">
+          <a class="button is-text" id='add_field_button'>
+            <span class="icon">
+              <i class="fas fa-plus"></i>
+            </span>
+            <span>Ajouter un autre lien</span>
+          </a>
+          <hr class="hr-dotted">
+        </div>
 
 
-      {{ form.submit(class='btn btn-primary btn-lg') }}
+        {{ form.submit(class='button is-primary btn-lg') }}
 
 
+      </form>
 
-    </form>
+  </div>
 
 
+    </section>
 
-
-</div>
 
 
 

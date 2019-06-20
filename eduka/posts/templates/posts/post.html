@@ -82,68 +82,23 @@
             {% endif %}
 
 
-            <div class="card-deck">
 
-            {% for l in links %}
+                <div class="cards-list">
+                  {% for l in links %}
 
-              {% if loop.index == 0 or loop.index == 2 or loop.index == 5 %}
-              <!-- // card color primary -->
+                  <a  href="{{ l.link_url }}" style="text-decoration: none;" target="_blank">
+                    <div class="m_card 1">
+                      <div class="card_image"> <img src="https://i.redd.it/b3esnz5ra34y.jpg" /> </div>
+                      <div class="card_title title-white">
+                        <p>{{ l.link_title }}</p>
+                      </div>
+                    </div>
+                  </a>
 
-              <a href="{{ l.link_url }}" style="text-decoration: none;" target="_blank">
 
-                <div class="card text-white bg-primary mb-3" style="max-width: 18rem;">
-                  <div class="card-header">Lien nº {{loop.index}}</div>
-                  <div class="card-body">
-                    <h5 class="card-title">{{ l.link_title }}</h5>
-                    <p class="card-text">{{ l.link_url }}</p>
-                  </div>
+                  {% endfor %}
+
                 </div>
-
-              </a>
-
-              {% elif loop.index == 1 or loop.index == 3 or loop.index == 6%}
-              <!-- // card color warning -->
-              <a href="{{ l.link_url }}" style="text-decoration: none;" target="_blank">
-                <div class="card text-white bg-warning mb-3" style="max-width: 18rem;">
-                  <div class="card-header">Lien nº {{loop.index}}</div>
-                  <div class="card-body">
-                    <h5 class="card-title">{{ l.link_title }}</h5>
-                    <p class="card-text">{{ l.link_url }}</p>
-                  </div>
-                </div>
-              </a>
-
-
-              {% elif loop.index == 7 or loop.index == 9 or loop.index == 1%}
-              <!-- // card color secondary -->
-               <a href="{{ l.link_url }}" style="text-decoration: none;" target="_blank">
-                <div class="card text-white bg-secondary mb-3" style="max-width: 18rem;">
-                  <div class="card-header">Lien nº {{loop.index}}</div>
-                  <div class="card-body">
-                    <h5 class="card-title">{{ l.link_title }}</h5>
-                    <p class="card-text">{{ l.link_url }}</p>
-                  </div>
-                </div>
-              </a>
-
-              {% else %}
-               <a href="{{ l.link_url }}" style="text-decoration: none;" target="_blank">
-                <div class="card text-white bg-success mb-3" style="max-width: 18rem;">
-                  <div class="card-header">Lien nº {{loop.index}}</div>
-                  <div class="card-body">
-                    <h5 class="card-title">{{ l.link_title }}</h5>
-                    <p class="card-text">{{ l.link_url }}</p>
-                  </div>
-                </div>
-              </a>
-
-
-            {% endif %}
-
-            {% endfor %}
-
-            </div>
-
 
           </div>
 
