@@ -9,7 +9,8 @@ from flask_login import login_required, current_user
 from eduka.models import User, Post, PostLink, PostView
 
 from eduka.utils.database_utils import (saving_post, saving_links,
-                                        saving_views, update_nbr_views)
+                                        saving_views, update_nbr_views,
+                                        update_links)
 from eduka.utils.other_utils import populate_form
 from datetime import datetime as dt, timedelta
 
@@ -30,16 +31,6 @@ def add_post():
 
     form.start_date.data = dt.now();
     form.end_date.data = dt.now() + seven_days;
-
-
-    '''
-
-    post_link_titles = [form.link1_title.data, form.link2_title.data,
-                   form.link3_title.data, form.link4_title.data, form.link5_title.data];
-    post_links = [form.link1.data, form.link2.data,
-                   form.link3.data, form.link4.data, form.link5.data];
-    '''
-
 
     if form.validate():
         pass
@@ -137,15 +128,6 @@ def update_post(post_id):
     form = AddPostForm()
     post = Post.query.get_or_404(post_id)
     nbr_links = len(post.links)
-    print(post.links)
-
-    pr_links = []
-    pr_link_titles = []
-
-    for l in post.links:
-        pr_links.append(l.link_url)
-        pr_link_titles.append(l.link_title)
-
 
     if current_user.id != post.user_id:
         ## the if statement here, makes sure that only the author can update the post
@@ -161,14 +143,15 @@ def update_post(post_id):
     if form.validate_on_submit():
         ''' saving the post '''
 
-        ## get the previous links
-        ## to avoid dupliacte links each time we update
-        ##pr_links_titles =
-
 
         ## to get the links and titles
-        post_link_titles = request.form.getlist('link1_title');
-        post_links = request.form.getlist('link1')
+        new_links = {
+            'l_titles': request.form.getlist('link1_title'),
+            'links': request.form.getlist('link1')
+        }
+        #post_link_titles = request.form.getlist('link1_title');
+        #post_links = request.form.getlist('link1')
+
 
         ## save the post without the links
         post.title = request.form['post_title']
@@ -181,14 +164,14 @@ def update_post(post_id):
         db.session.commit()
 
 
-        ## check to see if there have been changes
+        ## check to see if there have been changes and save links
+        ## if necessary
+        update_links(post_links=post.links,
+                     new_links=new_links, post_id=post_id)
 
-        #######/!\ /!\ Need more changes
-        if pr_links != post_links or pr_link_titles != post_link_titles:
 
-            ## saving links
-            saving_links(links=post_links, titles=post_link_titles,
-                         post_id=post.id)
+
+
         ### do a return to the post view page
         return redirect(url_for('posts.show_post', post_id=post.id))
 
