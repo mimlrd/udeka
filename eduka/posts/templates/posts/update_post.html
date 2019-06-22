@@ -19,6 +19,18 @@
             {% if error %}<p class=error><strong>Error:</strong> {{ error }}{% endif %}
           </div>
 
+          {% with messages = get_flashed_messages(with_categories=true) %}
+          <!-- Categories: success (green), info (blue), warning (yellow), danger (red) -->
+            {% if messages %}
+              {% for category, message in messages %}
+                <div class="notification {{category}}">
+                  <button class="delete"></button>
+                  {{ message }}
+                </div>
+              {% endfor %}
+            {% endif %}
+          {% endwith %}
+
           <form  method="POST">
 
             {# This hidden_tag is a CSRF security feature. #}
@@ -92,15 +104,29 @@
 
               <!-- Choose a category for the post -->
               <div class="field">
-                {{ form.post_category.label(class="label") }}
+                {{ form.post_tags.label(class="label") }}
                 <div class="control has-icons-left has-icons-right">
-                  {{ form.post_category(class="input", placeholder="python, sqlalchemy, flask") }}
+                  {{ form.post_tags(class="input", placeholder="python, sqlalchemy, flask") }}
                   <span class="icon is-small is-left">
                     <i class="fas fa-tag"></i>
                   </span>
                 </div>
-                <p class="help is-success">Chaque categorie doit etre séparer par une virgule</p>
+                <p class="help is-success">Chaque catégorie doit etre séparer par une virgule</p>
               </div>
+
+
+              {# Select the privacy level#}
+              <div class="field">
+                {{ form.post_privacy.label(class="label") }}
+                <div class="control">
+                  {{ form.post_privacy(class="input", type="select") }}
+                </div>
+                <p class="help is-success">Qui peut voir votre collection</p>
+              </div>
+
+
+
+
               {# div for the links - only add div if there are links to show #}
 
               {% if nbr_links > 0 %}

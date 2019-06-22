@@ -1,6 +1,8 @@
 ## views.py in core
 
 from flask import Blueprint, render_template, redirect, flash
+from eduka.models import Post
+
 
 
 core_blueprint = Blueprint('core',
@@ -13,6 +15,8 @@ core_blueprint = Blueprint('core',
 @core_blueprint.route('/')
 def home():
     title = 'eduka! Apprendre mieux!'
+
+
     return render_template('home.html', title=title)
 
 
@@ -20,3 +24,15 @@ def home():
 def about():
     title = 'eduka! À propos de nous'
     return render_template('about.html', title=title)
+
+@core_blueprint.route('/collections')
+def show_collections():
+    title = 'Public collections disponible'
+
+    ## get all the public posts
+
+    p = Post.query.filter(Post.privacy_level == 'pbl')
+    p_desc = p.order_by(Post.date_posted.desc())
+    posts = p_desc.limit(50).all()
+
+    return render_template('collection.html', title=title, posts=posts)

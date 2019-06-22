@@ -8,7 +8,7 @@ from eduka.posts.post_form import AddPostForm
 from flask_login import login_required, current_user
 from eduka.models import User, Post, PostLink, PostView
 
-from eduka.utils.database_utils import (saving_post, saving_links,
+from eduka.utils.database_utils import (saving_post, add_tags, saving_links,
                                         saving_views, update_nbr_views,
                                         update_links)
 from eduka.utils.other_utils import populate_form
@@ -47,7 +47,8 @@ def add_post():
         end_date = form.end_date.data;
         level_beg = form.start_level.data;
         level_end = form.end_level.data;
-        post_category = form.post_category.data
+        post_tags = form.post_tags.data;
+        privacy_level = form.privacy_level.data;
 
         ## to get the links and titles
         post_link_titles = request.form.getlist('link1_title');
@@ -57,7 +58,16 @@ def add_post():
         post = Post(title=title, summary=summary,
                     date_start=start_date, date_end=end_date,
                     level_beg=level_beg, level_end=level_end,
-                    category=post_category, user_id=author_id)
+                    privacy_level=privacy_level, user_id=author_id)
+
+        ## removing all the spaces
+        post_tags.split(",")
+        tags = post_tags.split(",")
+        for tag in tags:
+            tag.strip()
+            post_tag = add_tags(tag.lower())
+            #print(post_tag)
+            post.tags.append(post_tag)
 
         ## saving posts using the database_utils
         saving_post(post)
@@ -76,6 +86,9 @@ def add_post():
         form.end_date.data = dt.now();
         form.start_level.data = 'bg';
         form.end_level.data = 'exp';
+        form.privacy_level.data = 'pbl';
+
+        flash (u'New Post Created!', 'is-success')
 
         return redirect(url_for('posts.add_post'))
 
@@ -103,10 +116,16 @@ def show_post(post_id):
         ## adding number of views for the page
         saving_views(post_id=post.id)
 
-    ## 1 - get the categorie
-    ##2 - split the string into different
-    tags_str = post.category
-    tags = tags_str.split(",")
+    ## get all the Tag objects for the post
+    tags_obj = post.tags
+    ##print(f'tags: {post.tags}')
+    tags = []
+    for t in tags_obj:
+        tags.append(t.name)
+
+
+
+    #tags = tags_str.split(",")
     ##print(f"tags: {tags}")
     title = post.title
 
@@ -142,8 +161,6 @@ def update_post(post_id):
     ## need to change the database relationships
     if form.validate_on_submit():
         ''' saving the post '''
-
-
         ## to get the links and titles
         new_links = {
             'l_titles': request.form.getlist('link1_title'),
@@ -152,7 +169,6 @@ def update_post(post_id):
         #post_link_titles = request.form.getlist('link1_title');
         #post_links = request.form.getlist('link1')
 
-
         ## save the post without the links
         post.title = request.form['post_title']
         post.summary = request.form['post_summary']
@@ -160,17 +176,22 @@ def update_post(post_id):
         post.end_date = request.form['end_date']
         post.level_beg = request.form['start_level']
         post.level_end = request.form['end_level']
-        post.category = request.form['post_category']
-        db.session.commit()
+        post_tags = request.form['post_tags']
+        post.privacy_level = request.form['post_privacy']
+        ## updating tags
+        tags = post_tags.split(",")
+        for tag in tags:
+            tag.strip()
+            post_tag = add_tags(tag.lower())
+            print(post_tag)
+            post.tags.append(post_tag)
 
+        db.session.commit()
 
         ## check to see if there have been changes and save links
         ## if necessary
         update_links(post_links=post.links,
                      new_links=new_links, post_id=post_id)
-
-
-
 
         ### do a return to the post view page
         return redirect(url_for('posts.show_post', post_id=post.id))

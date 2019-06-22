@@ -54,8 +54,8 @@ class Post(db.Model):
     '''
     Post class will determine how the user add a post.
     '''
-
     __tablename__ = 'posts'
+
     default_post_img_link = "https://cdn.pixabay.com/photo/2019/05/01/21/39/programming-4172154_960_720.jpg"
 
     id = db.Column(db.Integer, primary_key=True)
@@ -65,24 +65,29 @@ class Post(db.Model):
     date_start = db.Column(db.DateTime, default=dt.utcnow)
     ## need to find a way to automatically add 7 days to starte date as default
     date_end = db.Column(db.DateTime, default=dt.utcnow)
-    level_beg = db.Column(db.Integer, default=0)
-    level_end = db.Column(db.Integer, default=0)
-    ## level ( 0- beginner, 1- intermediate, 2- Advance, 3- expert)
+    level_beg = db.Column(db.String(6), default='bg')
+    level_end = db.Column(db.String(6), default='bg')
+    privacy_level = db.Column(db.String(6), index=True ,default='pbl')
+
+
+    ## level ( bg- beginner, intr- intermediate, adv- Advance, exp- expert)
 
     ##---> Rename category - tags (might need to create own table Tag)
     ##---> tags need to be indexed, so users could search (query) easily by tag
-    category = db.Column(db.String(), default='IT')
+    ##category = db.Column(db.String(), default='IT')
     post_image_link = db.Column(db.String(350), nullable=True,
                                 default=default_post_img_link)
     ##nbr_views = db.Column(db.Integer, default=0)
     # Connect this table with other tables such as users and links
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
+    tags = db.relationship('Tag', secondary='post_tags', lazy='subquery',
+                           backref=db.backref('posts', lazy=True))
     links = db.relationship('PostLink', backref='post_link', lazy=True)
     nbr_views = db.relationship('PostView', backref='post_view', lazy=True)
 
     def __init__(self, title, summary,
                  level_beg,
-                 level_end, category, user_id, date_end, date_start=None):
+                 level_end, privacy_level, user_id, date_end, date_start=None):
 
         self.title = title;
         self.summary = summary;
@@ -90,7 +95,7 @@ class Post(db.Model):
         self.date_end = date_end;
         self.level_beg = level_beg;
         self.level_end = level_end;
-        self.category = category;
+        self.privacy_level = privacy_level;
         self.user_id = user_id
         ##self.date_posted = dt.utcnow
 
@@ -98,6 +103,25 @@ class Post(db.Model):
         return f'Post title: {self.title} and started at level:{self.level_beg}'
 
 
+class Tag(db.Model):
+    ''' The tags table for a many-to-many relationship '''
+    __tablename__ = 'tags'
+
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(150), default='Python')
+
+    def __repr__(self):
+        return self.name
+
+## mapping table
+post_tags = db.Table('post_tags', db.Model.metadata,
+                db.Column('tag_id', db.Integer,
+                          db.ForeignKey('tags.id'),
+                          primary_key=True),
+                db.Column('post_id', db.Integer,
+                          db.ForeignKey('posts.id'),
+                          primary_key=True)
+                )
 
 
 class PostLink(db.Model):

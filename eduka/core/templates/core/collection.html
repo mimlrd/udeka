@@ -1,0 +1,107 @@
+<!-- collection.html -->
+
+
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <section class="hero is-link">
+      <div class="hero-body">
+        <div class="container">
+          <h1 class="title">Toutes les collections disponibles publiquement</h1>
+          <h2 class="subtitle">Votez, inspirez-vous des meilleurs collections disponible.</h2>
+        </div>
+      </div>
+    </section>
+
+
+    <section class="section">
+      <div class="container">
+        <div class="row">
+          <div class="columns">
+
+            <div class="column is-4-widescreen">
+              {# LEFT SIDE #}
+              <section class="section">
+                <h3 class="title is-3"> Filtrer par date:</h3>
+                {# start of the card - need to change this for a table #}
+                <div class="menu">
+                  <ul class="menu-list">
+                    <li> <a href="#" class="is-active">All</a> </li>
+                    <li> <a href="#">Récent</a> </li>
+                    <li> <a  href="#">Il y a une semaine</a> </li>
+                    <li> <a href="#">Il y a deux semaine</a> </li>
+                    <li> <a href="#">Il y a un mois</a> </li>
+                  </ul>
+                </div>
+
+              </section>
+
+              <section class="section">
+                <h3 class="title is-3"> Filtrer par tags:</h3>
+                {# start of the card - need to change this for a table #}
+                <div class="menu">
+                  <ul class="menu-list">
+                    <li> <a href="#" class="is-active">All</a> </li>
+                    <li> <a href="#">Python</a> </li>
+                    <li> <a  href="#">Javascript</a> </li>
+                    <li> <a href="#">Flask</a> </li>
+                    <li> <a href="#">Git</a> </li>
+                  </ul>
+                </div>
+
+              </section>
+            </div>
+
+
+            {# RIGHT SIDE - SHOW COLLECTIONS#}
+            <div class="column is-8">
+              <section class="section">
+                <h3 class="title is-3"> Mes collections</h3>
+                {# we will dive the different colums#}
+                <div class="columns is-multiline">
+                  {# start the for loop to get all the posts #}
+                  {% for post in posts %}
+                    <div class="column is-one-third">
+                      {# start of the card #}
+                      <div class="card">
+                        <div class="card-image">
+                          <figure class="image is-4by3">
+                            <img src="{{ post.post_image_link }}" alt="Placeholder image">
+                          </figure>
+                        </div>
+                        <div class="card-content">
+                          <div class="media">
+                            <div class="media-content">
+                              <p class="title is-5">{{ post.title }}</p>
+                              <p class="subtitle is-6">{{ post.date_posted|format_date }}</p>
+                            </div>
+                          </div>
+
+                          <div class="content">
+                            {{ post.summary|truncate(70, True)|safe }}
+                          </div>
+                          <a href="{{ url_for('posts.show_post',post_id=post.id)}}" class="button is-primary issmall">Voir collection</a>
+                        </div>
+                      </div>
+                      {# end of the card #}
+                    </div>
+                  {% endfor %}
+
+                </div>
+
+              </section>
+
+            </div>
+
+          </div>
+
+      </div>
+
+
+    </section>
+
+
+
+
+{% endblock %}

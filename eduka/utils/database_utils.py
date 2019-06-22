@@ -5,7 +5,7 @@
  Here we will put the different functions to interact ith the database
 '''
 from eduka import db
-from eduka.models import User, Post, PostLink, PostView
+from eduka.models import User, Post, PostLink, PostView, Tag
 
 
 ## saving post to database
@@ -14,6 +14,17 @@ def saving_post(post):
     ## saving into database
     db.session.add(post)
     db.session.commit()
+
+## get the tags
+def add_tags(tag):
+    existing_tag = Tag.query.filter(Tag.name == tag.lower().strip()).one_or_none()
+    """if it does return existing tag objec to list"""
+    if existing_tag is not None:
+        return existing_tag
+    else:
+       new_tag = Tag()
+       new_tag.name = tag.lower()
+       return new_tag
 
 
 ## saving post links
@@ -38,7 +49,7 @@ def saving_links(links, titles, post_id):
 ## updating links
 def update_links(post_links, new_links, post_id):
     ## get the links from the dictionaries
-    ## I WILL NEED TO CREATE A DIFF CALCULATOR ALGORITH
+    ## I WILL NEED TO CREATE A DIFF CALCULATOR ALGORITHM
     ## get the previous links
     pr_links = []
     pr_link_titles = []

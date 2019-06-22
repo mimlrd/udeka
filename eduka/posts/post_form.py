@@ -27,7 +27,11 @@ class AddPostForm(FlaskForm):
                                                                     validators=[DataRequired()])
 
 
-    post_category = StringField('ajouer le categorie:', validators=[DataRequired()])
+    post_tags = StringField('ajouer le categorie:', validators=[DataRequired()])
+    post_privacy = SelectField('Sélectionner niveau de confidentialité:',
+                               choices=[('priv','Privé'),
+                                        ('pbl','Public')],
+                                        validators=[DataRequired()])
     link1_title = StringField('ajouter un title pour le lien:')
     link1 = StringField('ajouter un lien:')
 

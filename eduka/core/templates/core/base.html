@@ -38,6 +38,7 @@
 
             <a class="navbar-item"  href="{{ url_for('core.home') }}">Home</a>
             <a class="navbar-item"  href="{{ url_for('core.about') }}">À propos de</a>
+            <a class="navbar-item"  href="{{ url_for('core.show_collections') }}">Collections</a>
             {% if current_user.is_authenticated  %}
             <a href="{{ url_for('posts.add_post') }}" class="navbar-item">Publier</a>
             <a href="{{ url_for('users.my_account', user_id=current_user.id)}}" class="navbar-item"> Mon Compte</a>
