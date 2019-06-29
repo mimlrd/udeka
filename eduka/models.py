@@ -27,7 +27,7 @@ class User(db.Model, UserMixin):
                                     default=default_profile_link)
     email = db.Column(db.String(80), unique=True, nullable=False, index=True)
     username = db.Column(db.String(80), unique=True, nullable=False, index=True)
-    bio = db.Column(db.Text(200), default=default_bio)
+    bio = db.Column(db.Text(), default=default_bio)
     hash_password = db.Column(db.String(256))
     # This connects Posts to a User Author.
     posts = db.relationship('Post', backref='author', lazy=True)

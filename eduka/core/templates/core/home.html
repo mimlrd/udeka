@@ -5,43 +5,216 @@
 
 
 {% block content %}
-      <section class="section is-hero">
-        <div class="container">
-          <div class="columns is-vcentered">
-            <div class="column is-6 is-5-fullhd is-offset-1-fullhd">
-              <div class="section-header">
-                <h1 class="title is-spaced"> The bedtime story<span class="is-hidden-touch"><br></span> app for families </h1>
-                <h2 class="subtitle is-3"> Awaken the inner storyteller with diverse and empowering stories for young &amp; old. Storytelling has never been easier. </h2>
-                <div class="field is-grouped">
-                  <div class="control">
-                    <a class="button is-primary is-medium" href="#platform">How does it work?</a>
-                  </div>
-                  <div class="control">
-                    <a class="button is-light is-medium" href="/library">📚 Explore Library</a>
-                  </div>
-                </div>
-                <hr class="spacer is-1-5">
-                <a class="has-tint has-text-weight-semibold" href="http://www.parents-choice.org/product.cfm?product_id=35555" target="_blank">
-                  <i class="icon icon-award"></i>
-                  <span>Parents' Choice Approved App</span>
-                </a>
+      <!-------- top section: intro ------->
+      <section class="hero is-prime-color is-section1" id="section1">
+        <div class="hero-body">
+          <div class="container">
+            <div class="columns is-desktop is-vcentered">
+
+              <div class="column is-two-fifths">
+                {# Column left for the text#}
+                <h1 class="title is-1">  La nouvelle façon d'organiser les infos pertinentes par thème.</h1>
+                <p class="subtitle is-6">Groupez les sites web par thème.</p>
+                <a class="button is-primary">on y va!</a>
+                <a class="button is-primary is-outlined">Comment ça marche?</a>
               </div>
-            </div>
-            <div class="column is-6">
-              <div class="section-media">
-                <img role="presentation" src="/assets/images/hero/Hero-Karlotta@1x-8bd462e8.jpg?1553506572" srcset=" /assets/images/hero/Hero-Karlotta@1x-8bd462e8.jpg?1553506572 1x, /assets/images/hero/Hero-Karlotta@2x-cc57e26e.jpg?1553506572 2x"
-                  class="_ffn_img">
-                <p>
-                  <small><a href="/library/karlotta-the-knight">
-                      <u>Karlotta the Knight</u>
-                    </a> with her squire and steed.
-                  </small>
-                </p>
+
+              <div class="column">
+                {# Column right for the image#}
+                <figure class="image is-5by4">
+                  <img src="https://images.ctfassets.net/o70yg1tm4ur6/5C7C1wqEiLyOQQN4yzWvWj/6a8ee2b6d54177200f386f2cf6007832/hero-sreen-shot-app.jpg?fl=progressive&w=739">
+                </figure>
               </div>
+
             </div>
           </div>
         </div>
       </section>
+
+      <!-------- //top section: intro ------->
+
+      <!-------- section on showing companies using the service ------->
+
+      <section class="hero has-background-light" id="section2">
+        <div class="hero-body">
+          <div class="container">
+            <div class="level">
+              <div class="level-item has-text-centered">
+                <figure class="image is-64x64">
+                  <img src="https://www.bluleadz.com/hs-fs/hubfs/Brand%20Logos/Nasa.png?width=363&height=300&name=Nasa.png" alt="Une image">
+                </figure>
+              </div>
+
+              <div class="level-item has-text-centered">
+                <figure class="image is-64x64 ">
+                  <img src="https://www.bluleadz.com/hs-fs/hubfs/Brand%20Logos/500px-United_Parcel_Service_logo_2014.svg.png?width=252&height=300&name=500px-United_Parcel_Service_logo_2014.svg.png" alt="Une image">
+                </figure>
+              </div>
+
+              <div class="level-item has-text-centered">
+                <figure class="image is-64x64">
+                  <img src="https://www.bluleadz.com/hs-fs/hubfs/Brand%20Logos/3M.png?width=300&height=158&name=3M.png" alt="Une image">
+                </figure>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </section>
+          <!-------- //section on showing companies using the service ------->
+
+            <!-------- section on showing the collections ------->
+      <section class="hero" id="section3">
+        <div class="hero-body">
+          <div class="container">
+            <div class="columns is-desktop is-centered">
+              <div class="column has-text-centered">
+                <h1 class="title is-1">  Intelligent Et Intuitive.</h1>
+                <p class="subtitle is-4">Une manière intelligente d'organiser les liens des sites web par thème pour mieux comprendre un sujet.</p>
+
+                <figure class="image is-5by3">
+                  <img src="https://static.buffer.com/marketing/static/screenshots/buffer-publish-dashboard@2x.jpeg" alt="Une image">
+                </figure>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </section>
+      <!-------- //section on showing the collections ------->
+
+      <!-------- section how it works ------->
+      <section class="hero" id="section-hiw">
+        <div class="hero-body">
+          <div class="container">
+
+              <div class="columns is-desktop is-vcentered">
+
+                <div class="column is-two-fifths">
+                  {# Column left for the text#}
+                  <h1 class="title is-3">Comment Ça Marche?</h1>
+                  <p class="subtitle is-6">Créer des collections en quelques clics
+                    retrouvez vos collections sur votre page personnelle ou ouvrez
+                    les à la communauté.</p>
+                  <a class="button is-primary">on y va!</a>
+                </div>
+
+                <div class="column">
+                  {# Column right for the image#}
+                  <figure class="image is-5by4">
+                    <img src="https://static.buffer.com/marketing/static/illustrations/buffer-publish-planning@2x.jpeg" alt="Une image">
+                  </figure>
+                </div>
+
+              </div>
+
+            <!-- end of first row -->
+
+              <!-- begginning of second row -->
+              <div class="columns is-desktop is-vcentered" >
+
+                <!-- 1st column for 1º -->
+                <div class="column has-text-centered">
+
+                  <!-- create row for image -->
+                    <div class="columns is-desktop is-vcentered">
+                      <div class="column has-text-centered is-paddingless">
+                        <figure class="image 256x256 is-inline-block">
+                          <img src="https://static.buffer.com/marketing/static/ui/buffer-publish-scheduling@2x.jpeg" alt="Une image">
+                        </figure>
+                      </div>
+                    </div>
+
+                    <!-- create row for text -->
+                      <div class="columns">
+                        <div class="column">
+                          <p class="title is-4 is-marginless">Inscription</p>
+                          <p> Créer un compte qui vous permettra de sauvegarder vos collections facilement.</p>
+                        </div>
+                      </div>
+
+                </div>
+
+
+                <!-- // end 1º -->
+
+
+                <!-- 1st column for 2º -->
+                <div class="column has-text-centered">
+
+                  <!-- create row for image -->
+                    <div class="columns is-desktop is-vcentered">
+                      <div class="column has-text-centered is-paddingless">
+                        <figure class="image 256x256 is-inline-block">
+                          <img src="https://static.buffer.com/marketing/static/ui/buffer-publish-scheduling@2x.jpeg" alt="Une image">
+                        </figure>
+                      </div>
+                    </div>
+
+                    <!-- create row for text -->
+                      <div class="columns">
+                        <div class="column">
+                          <p class="title is-4 is-marginless">Publier une collection</p>
+                          <p> Choisir un titre, une description et ajouter pour la collection, puis ajouter autant de liens pour cette collection (thème)</p>
+                        </div>
+                      </div>
+
+                </div>
+
+
+                <!-- // end 2º -->
+
+                <!-- 1st column for 3º -->
+                <div class="column has-text-centered">
+
+                  <!-- create row for image -->
+                    <div class="columns is-desktop is-vcentered">
+                      <div class="column has-text-centered is-paddingless">
+                        <figure class="image 256x256 is-inline-block">
+                          <img src="https://static.buffer.com/marketing/static/ui/buffer-publish-scheduling@2x.jpeg" alt="Une image">
+                        </figure>
+                      </div>
+                    </div>
+
+                    <!-- create row for text -->
+                      <div class="columns">
+                        <div class="column">
+                          <p class="title is-4 is-marginless">Social</p>
+                          <p> Applaudissez les collections que vous aimez. Choississez quelle collection que vous voulez mettre public.</p>
+                        </div>
+                      </div>
+
+                </div>
+
+
+                <!-- // end 3º -->
+
+              </div>
+          </div>
+        </div>
+      </section>
+      <!-------- //section how it works ------->
+
+
+      <!-------- section rejoignez-nous ------->
+
+      <section class="hero is-warning is-medium is-bold">
+        <div class="hero-body">
+          <div class="container">
+            <div class="columns is-desktop is-centered">
+              <div class="column has-text-centered">
+                <h1 class="title is-1"> Rejoignez-nous et commencer à organiser vos liens de manière intelligente.</h1>
+                <a class="button is-primary">Je m'inscris gratuitement!</a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+
+      <!-------- //section rejoignez-nous ------->
+
+
+
 
 
 {% endblock %}

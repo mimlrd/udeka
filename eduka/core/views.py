@@ -27,7 +27,7 @@ def about():
 
 @core_blueprint.route('/collections')
 def show_collections():
-    title = 'Public collections disponible'
+    title = 'eduka! | Public collections disponible'
 
     ## get all the public posts
 

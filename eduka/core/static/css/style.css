@@ -25,6 +25,14 @@
 }
 */
 
+.rows{
+    display: flex;
+    flex-direction: column;
+}
+
+
+
+
 
 .hero.is-prime-color {
     background-color: #6d39bd;
@@ -46,6 +54,13 @@
 
 .hero.is-prime-color .subtitle a:not(.button), .hero.is-prime-color .subtitle strong {
     color: #fff
+}
+
+@media screen and (min-width: 769px), print {
+    .hero.is-section1 .hero-body {
+        padding-bottom: 8rem;
+        padding-top: 8rem
+    }
 }
 
 #btn_field {
