@@ -17,7 +17,7 @@ from eduka.posts.views import posts_blueprint
 from eduka.core.views import core_blueprint
 
 
-## utils 
+## utils
 from eduka.utils.app_filters import filter_blueprint
 
 ## error pages blueprints
@@ -39,4 +39,7 @@ app.register_blueprint(error_pages_blueprint)
 
 
 if __name__ == '__main__':
-    app.run()
+    app.run(host= '0.0.0.0', port=5000, debug=True)
+    # to run app so on ip 192.168.1.29:5000
+    ## using the computer ip address instead of
+    ## 127.0.0.1:5000 the localhost

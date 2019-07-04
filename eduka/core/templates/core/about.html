@@ -6,30 +6,69 @@
 
 {% block content %}
 
-  <section class="hero is-light">
-  <div class="hero-body">
-    <div class="container">
-      <h1 class="title">
-        eduka! À propos de nous.
-      </h1>
-      <h2 class="subtitle">
-        Le site qui vous aide à grouper, organiser et visualiser <br>   toutes les informations sur un thème.
-      </h2>
-    </div>
-  </div>
-  </section>
 
 
 
   <section class="section">
-
     <div class="container">
+      <h1 class="title is-1">Bienvenue chez eduka!</h1>
 
+      <div class="columns is-desktop">
+        <div class="column">
+          <div class="content is-medium">
+            <h3 >  À propos du service eduka!.</h3>
+            <p >
+              Avec la multiplication presqu'a l'infini de l'information sur web disponible, il peut être assez diffficile de se souvenir de tous les sites internet visiter lors des recherches sur un sujet particulier.
+              Bien entendu, vous pouvez utiliser les "Bookmarks" (marque-pages disponible par le biais de votre navigateur internet habituel), mais on le sait que trop bien que cela peut devenir un très grand fouilli
+              très rapidement et que l'on se rapelle pas souvent de reconsulter ses fameuses "Bookmarks".
+            </p>
+            <p>C'est pour cela que l'on a conçu <strong>eduka!</strong></p>
+            <p>
+              Le site qui vous aide à <strong>regrouper, organiser et visualiser</strong> toutes les informations
+              sur un thème/ sujet très simplement. Vous pouvez créer des marque-pages par sujet appeler "collection". Pour chaque collection, vous pouvez:
+            </p>
+            <ul>
+              <li>Donner un titre qui caractérise le thème/ sujet de la collection</li>
+              <li>Ajouter un résumé qui vous permetra de comprendre le sujet</li>
+              <li>Si le but est 'apprentissage', vous pourrez noter votre niveau de complexité du sujet mais aussi la progresion que vous souhaiter obtenir à la fin de la lecture, visonnage (débutant, intermédiaire, avancé ou expert)</li>
+              <li>Le temps que vous estimiez nécessaire afin d'obtenir le niveau souhaiter</li>
+              <li>Classer par tags (étiquette) comme: Javascrit, Python, Économie, Sociologie ...</li>
+              <li>Ajouter autant de lien au thème/sujet pour créer la collection </li>
+              <li>Décider si votre collection est privée ou public</li>
+            </ul>
+          </div>
+
+
+        </div>
+      </div>
     </div>
-
 
 
   </section>
 
+  <!-------- section rejoignez-nous ------->
 
-{% endblock %}
+  <section class="hero is-warning is-medium is-bold">
+    <div class="hero-body">
+      <div class="container">
+        <div class="columns is-desktop is-centered">
+          <div class="column has-text-centered">
+            <h1 class="title is-1"> Commencez à collectionner et à donner tous son sens à l'information</h1>
+            {% if current_user.is_authenticated %}
+            <a  href="{{url_for('posts.add_post')}}" class="button is-primary">Je crée une collection</a>
+            {% else %}
+            <a href="{{url_for('users.registration')}}" class="button is-info">Je m'inscris gratuitement!</a>
+            {% endif %}
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-------- //section rejoignez-nous ------->
+
+{% endblock content%}
+
+{% block footer %}
+{% include 'footer.html' %}
+{% endblock footer%}

@@ -48,7 +48,7 @@ def add_post():
         level_beg = form.start_level.data;
         level_end = form.end_level.data;
         post_tags = form.post_tags.data;
-        privacy_level = form.privacy_level.data;
+        privacy_level = form.post_privacy.data;
 
         ## to get the links and titles
         post_link_titles = request.form.getlist('link1_title');
@@ -86,7 +86,7 @@ def add_post():
         form.end_date.data = dt.now();
         form.start_level.data = 'bg';
         form.end_level.data = 'exp';
-        form.privacy_level.data = 'pbl';
+        form.post_privacy.data = 'pbl';
 
         flash (u'New Post Created!', 'is-success')
 

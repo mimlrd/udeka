@@ -14,15 +14,27 @@
               <div class="column is-two-fifths">
                 {# Column left for the text#}
                 <h1 class="title is-1">  La nouvelle façon d'organiser les infos pertinentes par thème.</h1>
-                <p class="subtitle is-6">Groupez les sites web par thème.</p>
-                <a class="button is-primary">on y va!</a>
-                <a class="button is-primary is-outlined">Comment ça marche?</a>
+                <div class="content is-medium">
+                  <p >Le site qui vous aide à regrouper, organiser et visualiser toutes
+                    les informations sur un thème/ sujet tous simplement.
+                  </p>
+                </div>
+
+
+                {% if current_user.is_authenticated %}
+                <a  href="{{url_for('posts.add_post')}}" class="button is-primary">Je crée une collection</a>
+                {% else %}
+                <a href="{{url_for('users.registration')}}" class="button is-info">Je m'inscris gratuitement!</a>
+                <a href="#section-hiw" class="button is-primary is-outlined">Comment ça marche?</a>
+                {% endif %}
+
+
               </div>
 
               <div class="column">
                 {# Column right for the image#}
                 <figure class="image is-5by4">
-                  <img src="https://images.ctfassets.net/o70yg1tm4ur6/5C7C1wqEiLyOQQN4yzWvWj/6a8ee2b6d54177200f386f2cf6007832/hero-sreen-shot-app.jpg?fl=progressive&w=739">
+                  <img src="https://www.beekast.com/wp-content/uploads/2019/06/fonctionnalites-beekast-FR.png">
                 </figure>
               </div>
 
@@ -70,7 +82,13 @@
             <div class="columns is-desktop is-centered">
               <div class="column has-text-centered">
                 <h1 class="title is-1">  Intelligent Et Intuitive.</h1>
-                <p class="subtitle is-4">Une manière intelligente d'organiser les liens des sites web par thème pour mieux comprendre un sujet.</p>
+                <div class="content is-medium">
+                  <p>Une manière intelligente d'organiser les liens des
+                    sites web par thème pour mieux comprendre un sujet.
+                  </p>
+
+                </div>
+
 
                 <figure class="image is-5by3">
                   <img src="https://static.buffer.com/marketing/static/screenshots/buffer-publish-dashboard@2x.jpeg" alt="Une image">
@@ -93,10 +111,22 @@
                 <div class="column is-two-fifths">
                   {# Column left for the text#}
                   <h1 class="title is-3">Comment Ça Marche?</h1>
-                  <p class="subtitle is-6">Créer des collections en quelques clics
-                    retrouvez vos collections sur votre page personnelle ou ouvrez
-                    les à la communauté.</p>
-                  <a class="button is-primary">on y va!</a>
+                  <div class="content is-medium">
+                    <p>Créer des collections en quelques clics
+                      retrouvez vos collections sur votre page personnelle ou ouvrez
+                      les à la communauté.
+                    </p>
+
+                  </div>
+
+                  {% if current_user.is_authenticated %}
+                  <a  href="{{url_for('posts.add_post')}}" class="button is-primary">Je crée une collection</a>
+                  {% else %}
+                  <a href="{{url_for('users.registration')}}" class="button is-info">Je m'inscris gratuitement!</a>
+                  {% endif %}
+
+
+
                 </div>
 
                 <div class="column">
@@ -203,8 +233,12 @@
           <div class="container">
             <div class="columns is-desktop is-centered">
               <div class="column has-text-centered">
-                <h1 class="title is-1"> Rejoignez-nous et commencer à organiser vos liens de manière intelligente.</h1>
-                <a class="button is-primary">Je m'inscris gratuitement!</a>
+                <h1 class="title is-1"> Commencez à collectionner et à donner tous son sens à l'information</h1>
+                {% if current_user.is_authenticated %}
+                <a  href="{{url_for('posts.add_post')}}" class="button is-primary">Je crée une collection</a>
+                {% else %}
+                <a href="{{url_for('users.registration')}}" class="button is-info">Je m'inscris gratuitement!</a>
+                {% endif %}
             </div>
           </div>
         </div>
@@ -217,4 +251,8 @@
 
 
 
-{% endblock %}
+{% endblock content%}
+
+{% block footer %}
+{% include 'footer.html' %}
+{% endblock footer%}
