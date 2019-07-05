@@ -194,6 +194,55 @@ body{
 
 /*** End of box for registration and login **/
 
+/*//////////////////////////////////////////////////////////////////
+[ slidding view for edit profile ]*/
+
+
+.slide-in {
+  z-index: 1000; /* to position it in front of the other content */
+  /* position: absolute; */
+  position: fixed; /* Sit on top of the page content */
+  overflow: auto; /* to prevent scrollbar appearing */
+  height: calc(100% - 52px);
+}
+
+/* .slide-in.from-left {
+  left: 0;
+} */
+
+.slide-in.from-right {
+  right: 0;
+}
+
+.slide-in-content {
+  width: 600px;
+  /* height: 100vh; */
+  /* Subtract the header size */
+
+  padding: 5px 20px;
+  background: #fff;
+  transition: all .5s ease; /* our nice transition */
+  /* overflow: auto; */
+}
+
+/* .slide-in.from-left .slide-in-content {
+  transform: translateX(-100%);
+  -webkit-transform: translateX(-100%);
+} */
+
+.slide-in.from-right .slide-in-content {
+  transform: translateX(100%);
+  -webkit-transform: translateX(100%);
+}
+
+.slide-in.show .slide-in-content {
+  transform: translateX(0);
+  -webkit-transform: translateX(0);
+}
+/*** End of edit profile slider **/
+
+
+
 /* custom cards */
 .cards-list {
   z-index: 0;

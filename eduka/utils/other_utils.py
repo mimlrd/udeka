@@ -20,3 +20,10 @@ def populate_form(post, form):
     ## using ", ".join() to transform the list into a
     ## string separated by a comma (,)
     form.post_tags.data = ", ".join(tags)
+
+def populate_edit_form(user,form):
+
+    ## populate all the data in the edit pages
+    form.username.data = user.username
+    form.email.data = user.email
+    form.bio.data = user.bio

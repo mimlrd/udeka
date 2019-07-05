@@ -4,9 +4,11 @@
 from flask import (Blueprint, render_template, url_for,
                    flash, redirect, request, abort)
 from eduka import login_manager, db
-from eduka.users.user_forms import LoginForm, RegistrationForm, ForgotAccountForm
+from eduka.users.user_forms import LoginForm, RegistrationForm, ForgotAccountForm, EditProfileForm
 from flask_login import logout_user, login_required, login_user, current_user
 from eduka.models import User, Post
+from eduka.utils.other_utils import populate_edit_form
+from werkzeug.utils import secure_filename
 
 users_blueprint = Blueprint('users',
                             __name__,
@@ -94,12 +96,12 @@ def logout():
 ######################################################
 
 
-@users_blueprint.route('/<int:user_id>/account')
+@users_blueprint.route('/<int:user_id>/account', methods=['GET', 'POST'])
 @login_required
 def my_account(user_id):
 
     title = "Ma page de profile"
-
+    edit_form = EditProfileForm()
     ## The current_user is automatically passsed to the jinja template
     ## we need to to get the current_user Posts
 
@@ -110,9 +112,23 @@ def my_account(user_id):
     p = Post.query.filter_by(user_id=user_id)
     p_desc = p.order_by(Post.date_posted.desc())
     posts = p_desc.all()
+
+    ##### edit user ######
+    populate_edit_form(user=user, form=edit_form)
+
+    if edit_form.validate_on_submit():
+        ## the form is okay, so we can save to the database
+        new_email = request.form['email']
+        new_bio = request.form['bio']
+        print(f'new email: {new_email}, new bio: {new_bio}')
+
+
+
+
     return render_template('account.html', user=user,
                            user_id=user.id,
-                           posts=posts,title=title)
+                           posts=posts,title=title,
+                           form = edit_form)
 
 
 

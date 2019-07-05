@@ -3,6 +3,15 @@
 {% extends 'base.html' %}
 
 {% block content %}
+    <!----- Slidding right section --->
+    <div class="slide-in from-right">
+      <div class="slide-in-content">
+        {% with user=user, form=form %}
+        {% include 'edit_profile.html' %}
+        {% endwith %}
+      </div>
+    </div>
+    <!----- //Slidding right section --->
 
     <section class="hero is-prime-color">
       <div class="hero-body">
@@ -25,7 +34,7 @@
               <nav class="level is-mobile">
                 <div class="level-left">
                   {% if current_user.id == user.id %}
-                  <a class="level-item">
+                  <a class="level-item" id="toggle">
                     <span class="icon is-small"><i class="fas fa-user-edit"></i></span>
                   </a>
                   {% endif %}
@@ -39,21 +48,18 @@
 
             {# right side to add info such as nbr collection, nbr like, etc #}
 
-            <div class="media-right">
+            <!-- <div class="media-right">
               <button class="delete"></button>
-            </div>
+            </div> -->
           </article>
           <!-- /.media -->
         </div>
       </div>
 
-
-
     </section>
 
-
+    {# ************ LEFT SIDE *************************** #}
     <section class="section">
-
       <div class="container">
         <div class="row">
           <div class="columns">
@@ -77,9 +83,13 @@
             </div>
 
 
-            {# RIGHT SIDE #}
+            {# ********** RIGHT SIDE  ************** #}
             <div class="column is-8">
               <section class="section">
+
+
+
+
                 <h3 class="title is-3"> Mes collections</h3>
                 {# we will dive the different colums#}
                 <div class="columns is-multiline">
@@ -115,6 +125,7 @@
 
               </section>
 
+
             </div>
 
           </div>
@@ -123,6 +134,6 @@
 
 
     </section>
-    
+
 
 {% endblock %}
