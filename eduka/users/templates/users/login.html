@@ -5,88 +5,115 @@
 
 {% block content %}
 
-  <div class="container" style="width: 60%">
+          <div class="limiter">
+            <div class="container-login100">
 
-      <h1 class="title is-2">  Renseignez vos identifiants: </h1>
+              <div class="login-box">
+
+                <!-----------Start of left box ----->
+                <div class="left-box">
+
+                  <div class="container">
+                    {# Column left for the text#}
+                    <h1 class="left-box-title"> Je n'ai pas de compte. </h1>
+
+                    <div class="level">
+                      <div class="level-item has-text-centered">
+                        <div>
+                          <a href="{{url_for('users.registration')}}" class="button is-primary">Je m'inscrit gratuitement</a>
+                        </div>
+                      </div>
+                    </div>
+
+                  </div>
+
+                </div>
 
 
-      <div class="row">
-        {% if error %}<p class=error><strong>Error:</strong> {{ error }}{% endif %}
 
-      </div>
+                <!-----------Start of right box ----->
+                <div class="right-box" style="padding-top: 144px">
 
-        {% with messages = get_flashed_messages(with_categories=true) %}
-        <!-- Categories: success (green), info (blue), warning (yellow), danger (red) -->
-          {% if messages %}
-            {% for category, message in messages %}
-              <div class="notification is-warning">
-                <button class="delete"></button>
-                {{ message }}
-              </div>
-            {% endfor %}
-          {% endif %}
-        {% endwith %}
+                  <h1 class="title is-4"> Renseignez vos identifiants: </h1>
+                  <div class="row">
+                    {% if error %}<p class=error><strong>Error:</strong> {{ error }}{% endif %}
 
-      <form  method="POST">
+                  </div>
 
-        {# This hidden_tag is a CSRF security feature. #}
-        {{ form.hidden_tag() }}
+                  {% with messages = get_flashed_messages(with_categories=true) %}
+                  <!-- Categories: success (green), info (blue), warning (yellow), danger (red) -->
+                  {% if messages %}
+                  {% for category, message in messages %}
+                  <div class="notification is-warning">
+                    <button class="delete"></button>
+                    {{ message }}
+                  </div>
+                  {% endfor %}
+                  {% endif %}
+                  {% endwith %}
 
-        <div class="field">
-          {{ form.email.label(class="label") }}
-          <div class="control has-icons-left has-icons-right">
-            {{ form.email(class="input", placeholder="Votre email") }}
-            <span class="icon is-small is-left">
-              <i class="fas fa-envelope"></i>
-            </span>
-            <span class="icon is-small is-right">
-              <i class="fas fa-exclamation-triangle"></i>
-            </span>
+                  <form method="POST">
+
+                    {# This hidden_tag is a CSRF security feature. #}
+                    {{ form.hidden_tag() }}
+
+                    <div class="field">
+                      {{ form.email.label(class="label") }}
+                      <div class="control has-icons-left has-icons-right">
+                        {{ form.email(class="input", placeholder="Votre email") }}
+                        <span class="icon is-small is-left">
+                          <i class="fas fa-envelope"></i>
+                        </span>
+                        <span class="icon is-small is-right">
+                          <i class="fas fa-exclamation-triangle"></i>
+                        </span>
+                      </div>
+                      <p class="help is-success">This username is available</p>
+                    </div>
+
+
+
+                    <div class="field">
+                      {{ form.password.label(class="label") }}
+                      <div class="control has-icons-left has-icons-right">
+                        {{ form.password(class="input", placeholder="mot de passe") }}
+                        <span class="icon is-small is-left">
+                          <i class="fas fa-lock"></i>
+                        </span>
+                      </div>
+                      <p class="help is-success">This username is available</p>
+                    </div>
+
+                    <div class="field">
+                      <div class="control">
+                        <label class="checkbox">
+                          {{ form.remember(class="form-check-input") }}
+                          {{ form.remember.label()}}
+                        </label>
+                      </div>
+                    </div>
+
+
+                    <div class="field is-grouped">
+                      <div class="control">
+                        {{ form.submit(class='button is-primary is-medium') }}
+                      </div>
+                    </div>
+
+                    <div class="field is-grouped">
+                      <div class="control">
+                        <a href="{{ url_for('users.forgot_pwd') }}">Mot de passe oublié?</a>
+                      </div>
+                    </div>
+
+                  </form>
+
+                </div>
+
+
+              </div> <!-----------// end login-box ----->
+            </div>
           </div>
-          <p class="help is-success">This username is available</p>
-        </div>
-
-
-
-        <div class="field">
-          {{ form.password.label(class="label") }}
-          <div class="control has-icons-left has-icons-right">
-            {{ form.password(class="input", placeholder="mot de passe") }}
-            <span class="icon is-small is-left">
-              <i class="fas fa-lock"></i>
-            </span>
-          </div>
-          <p class="help is-success">This username is available</p>
-        </div>
-
-        <div class="field">
-          <div class="control">
-            <label class="checkbox">
-              {{ form.remember(class="form-check-input") }}
-              {{ form.remember.label()}}
-            </label>
-          </div>
-        </div>
-
-
-        <div class="field is-grouped">
-          <div class="control">
-            {{ form.submit(class='button is-primary is-medium') }}
-          </div>
-        </div>
-
-        <div class="field is-grouped">
-          <div class="control">
-            <a href="{{ url_for('users.forgot_pwd') }}">Mot de passe oublié?</a>
-          </div>
-        </div>
-
-      </form>
-
-
-
-
-  </div>
 
 
 

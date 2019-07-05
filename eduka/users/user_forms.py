@@ -8,8 +8,8 @@ from eduka.models import User ## To check the curent user
 
 class LoginForm(FlaskForm):
 
-    email = StringField('email', validators=[DataRequired(), Email()])
-    password = PasswordField('mot de passe')
+    email = StringField('Email', validators=[DataRequired(), Email()])
+    password = PasswordField('Mot de passe')
     remember = BooleanField('Se souvenir de moi', default="checked")
     submit = SubmitField('Connexion')
 
@@ -18,10 +18,10 @@ class LoginForm(FlaskForm):
 
 class RegistrationForm(FlaskForm):
 
-    email = StringField('email', validators=[DataRequired(), Email()])
-    username = StringField("nom d'utilisateur", validators=[DataRequired()])
-    password = PasswordField('mot de passe', validators=[Length(min=8)])
-    re_password = PasswordField('retaper nom de passe',
+    email = StringField('Email', validators=[DataRequired(), Email()])
+    username = StringField("Nom d'utilisateur", validators=[DataRequired()])
+    password = PasswordField('Mot de passe', validators=[Length(min=8)])
+    re_password = PasswordField('Retaper nom de passe',
                               validators=[EqualTo(fieldname='password',
                                                   message='Mot de passe doit être pareil!')])
     submit = SubmitField("M'inscrire")
@@ -57,5 +57,5 @@ class ForgotAccountForm(FlaskForm):
 
 	#### form to fill if forgot account
 
-	email = StringField('Email Address', validators=[DataRequired(), Email()])
+	email = StringField('Adresse Email', validators=[DataRequired(), Email()])
 	submit = SubmitField('Récuperer')

@@ -5,41 +5,73 @@
 
 {% block content %}
 
-<div class="container" style="width: 60%">
+          <div class="limiter">
+            <div class="container-login100">
 
-  <h1 class="title is-2">  {{ legend }} </h1>
+              <div class="login-box">
 
-  <form method="POST">
+                <!-----------Start of left box ----->
+                <div class="left-box">
 
-    {# This hidden_tag is a CSRF security feature. #}
-    {{ form.hidden_tag() }}
+                  <div class="container">
+                    {# Column left for the text#}
+                    <h1 class="left-box-title"> Retour à la connexion</h1>
 
-    <div class="field">
-      {{ form.email.label(class="label") }}
-      <div class="control has-icons-left has-icons-right">
-        {{ form.email(class="input", placeholder="Votre email") }}
-        <span class="icon is-small is-left">
-          <i class="fas fa-envelope"></i>
-        </span>
-        <span class="icon is-small is-right">
-          <i class="fas fa-exclamation-triangle"></i>
-        </span>
-      </div>
-      <p class="help is-success">This username is available</p>
-    </div>
+                    <div class="level">
+                      <div class="level-item has-text-centered">
+                        <div>
+                          <a href="{{url_for('users.login')}}" class="button is-primary">Je me connecte</a>
+                        </div>
+                      </div>
+                    </div>
 
+                  </div>
 
-    <div class="field is-grouped">
-      <div class="control">
-        {{ form.submit(class="button is-primary is-medium") }}
-      </div>
-    </div>
+                </div>
 
 
-  </form>
 
-</div>
+                <!-----------Start of right box ----->
+                <div class="right-box" style="padding-top: 231px">
 
+                  <h1 class="title is-4"> {{ legend }} </h1>
+
+                  <form method="POST">
+
+                    {# This hidden_tag is a CSRF security feature. #}
+                    {{ form.hidden_tag() }}
+
+                    <div class="field">
+                      {{ form.email.label(class="label") }}
+                      <div class="control has-icons-left has-icons-right">
+                        {{ form.email(class="input", placeholder="Votre email") }}
+                        <span class="icon is-small is-left">
+                          <i class="fas fa-envelope"></i>
+                        </span>
+                        <span class="icon is-small is-right">
+                          <i class="fas fa-exclamation-triangle"></i>
+                        </span>
+                      </div>
+                      <p class="help is-success">This username is available</p>
+                    </div>
+
+
+                    <div class="field is-grouped">
+                      <div class="control">
+                        {{ form.submit(class="button is-primary is-medium") }}
+                      </div>
+                    </div>
+
+
+                  </form>
+
+                </div>
+
+
+              </div>
+              <!-----------// end login-box ----->
+            </div>
+          </div>
 
 
 {% endblock %}
