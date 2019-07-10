@@ -1,7 +1,7 @@
 <!-- edit_profile.html -->
 
-<form method="POST" enctype="multipart/form-data">
-  <div class="media">
+<form method="POST" enctype="multipart/form-data" >
+  <div class="media u-margin-top-small">
     <div class="media-left">
       <h1 class="title is-4" > Éditer mon profile </h1>
     </div>
@@ -14,21 +14,29 @@
   {# This hidden_tag is a CSRF security feature. #}
   {{ form.hidden_tag() }}
 
-  <div class="field">
-  <label class="label" for="username">Ajoutez une photo à votre profile</label>
+  <div class="field u-margin-top-medium">
+  <!-- <label class="label" for="username">Ajoutez une photo à votre profile</label> -->
+  {{ form.avatar_pic.label(class="label")}}
+
   <div class="file is-small is-boxed has-name">
     <label class="file-label">
-      <input class="file-input" type="file" name="resume">
+      <!-- <input class="file-input" type="file" name="resume"> -->
+      {{ form.avatar_pic(class="file-input")}}
       <span class="file-cta">
         <span class="file-icon">
           <i class="fas fa-upload"></i>
         </span>
         <span class="file-label">
-          Small file…
+          votre avatar…
         </span>
       </span>
       <span class="file-name">
-        Screen Shot 2017-07-29 at 15.54.25.png
+        {%  if filename %}
+        {{ filename }}
+        {% else %}
+        votre_photo.png
+        {% endif %}
+
       </span>
     </label>
   </div>
@@ -61,6 +69,9 @@
       </span>
     </div>
     <p class="help is-success">We'll never share your email with anyone else</p>
+    {% if form.email.errors %}
+        <ul class="errors">{% for error in form.email.errors %}<li>{{ error }}</li>{% endfor %}</ul>
+    {% endif %}
   </div>
 
   <div class="field">
@@ -72,33 +83,9 @@
   </div>
 
 
-  <div class="field">
-    {{ form.new_pwd.label(class="label") }}
-    <div class="control has-icons-left has-icons-right">
-      {{ form.new_pwd(class="input", placeholder="mot de passe") }}
-      <span class="icon is-small is-left">
-        <i class="fas fa-lock"></i>
-      </span>
-    </div>
-    <p class="help is-success">8 characters min.</p>
-  </div>
-
-  <div class="field">
-    {{ form.confirm_new_pwd.label(class="label") }}
-    <div class="control has-icons-left has-icons-right">
-      {{ form.confirm_new_pwd(class="input", placeholder="re-taper votre mot de passe") }}
-      <span class="icon is-small is-left">
-        <i class="fas fa-lock"></i>
-      </span>
-    </div>
-    <p class="help is-success">8 characters min.</p>
-  </div>
-
-
-
   <div class="field is-grouped">
     <div class="control">
-      {{ form.submit(class='button is-primary is-medium') }}
+      {{ form.update_submit(class='button is-primary is-medium') }}
     </div>
   </div>
 

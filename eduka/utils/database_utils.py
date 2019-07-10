@@ -117,7 +117,24 @@ def update_links(post_links, new_links, post_id):
 
 
 
+## Udpdate user Info
+def update_user_info(user_info):
+    new_username = user_info["username"]
+    new_email = user_info["email"]
+    new_bio = user_info["about_me"]
+    avatar_url = user_info["url"]
+    current_user = user_info["current_user"]
 
+    current_user.username = new_username;
+    current_user.email = new_email;
+    current_user.bio = new_bio;
+    ## To avoid saving and empty link, check if user has
+    ## uploaded a new avatar picture first
+    if avatar_url:
+        current_user.profile_image_link = avatar_url
+
+    #print(f"saving user info: {user_info}")
+    db.session.commit()
 
 
 

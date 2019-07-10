@@ -28,6 +28,10 @@ class User(db.Model, UserMixin):
     email = db.Column(db.String(80), unique=True, nullable=False, index=True)
     username = db.Column(db.String(80), unique=True, nullable=False, index=True)
     bio = db.Column(db.Text(), default=default_bio)
+    # member_since = db.Column(db.DateTime(), default=datetime.utcnow)
+    #updated = db.Column(db.DateTime(), default=datetime.utcnow)
+    ## see following links:
+    ## https://github.com/miguelgrinberg/flasky/blob/master/app/models.py
     hash_password = db.Column(db.String(256))
     # This connects Posts to a User Author.
     posts = db.relationship('Post', backref='author', lazy=True)
@@ -60,6 +64,7 @@ class Post(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     date_posted = db.Column(db.DateTime, index=True, default=dt.utcnow)
+    #date_updated = db.Column(db.DateTime(), default=datetime.utcnow)
     title = db.Column(db.String(200), unique=False, nullable=False)
     summary = db.Column(db.Text(), nullable=False)
     date_start = db.Column(db.DateTime, default=dt.utcnow)
@@ -85,8 +90,7 @@ class Post(db.Model):
     links = db.relationship('PostLink', backref='post_link', lazy=True)
     nbr_views = db.relationship('PostView', backref='post_view', lazy=True)
 
-    def __init__(self, title, summary,
-                 level_beg,
+    def __init__(self, title, summary,level_beg,
                  level_end, privacy_level, user_id, date_end, date_start=None):
 
         self.title = title;

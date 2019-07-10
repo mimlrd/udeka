@@ -51,7 +51,7 @@
           <!-- MIDDLE COLUMN -->
           <div class="column is-8">
             <h1 class="title is-2">{{ post.title }}</h1>
-            <p class="subtitle is-6"><small class="text-muted">{{ post.date_posted | format_date }}</small></p>
+            <p class="subtitle is-6"><small class="text-muted">{{ post.date_posted | datetimeformat }}</small></p>
             {% if author.id == current_user.id %}
             <div class="u-margin-bottom-small">
               <a href="{{ url_for('posts.update_post', post_id=post.id) }}" class="button is-primary is-outlined"> Update</a>

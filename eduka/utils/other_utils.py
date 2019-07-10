@@ -3,6 +3,13 @@
 from flask import Blueprint
 
 
+ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg', 'gif'])
+
+def allowed_file(filename):
+    return '.' in filename and \
+           filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
+
 def populate_form(post, form):
 
     ## fill the form with info from the post to update

@@ -92,7 +92,7 @@ def add_post():
 
         return redirect(url_for('posts.add_post'))
 
-    ##print(f'form errors: {form}')
+    #print(f'form errors: {form.errors}')
 
     return render_template('create_post.html', title=title, form=form)
 

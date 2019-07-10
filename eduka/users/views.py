@@ -7,12 +7,15 @@ from eduka import login_manager, db
 from eduka.users.user_forms import LoginForm, RegistrationForm, ForgotAccountForm, EditProfileForm
 from flask_login import logout_user, login_required, login_user, current_user
 from eduka.models import User, Post
-from eduka.utils.other_utils import populate_edit_form
+from eduka.utils.other_utils import populate_edit_form, allowed_file
+from eduka.utils.database_utils import update_user_info
 from werkzeug.utils import secure_filename
 
 users_blueprint = Blueprint('users',
                             __name__,
                             template_folder='templates/users')
+
+
 
 
 @users_blueprint.route('/login', methods=['GET', 'POST'])
@@ -117,14 +120,38 @@ def my_account(user_id):
     populate_edit_form(user=user, form=edit_form)
 
     if edit_form.validate_on_submit():
+        from eduka.utils.save_file import upload_file_to_s3
         ## the form is okay, so we can save to the database
+        #print("from validate on submit()")
+        new_username = request.form['username']
         new_email = request.form['email']
         new_bio = request.form['bio']
-        print(f'new email: {new_email}, new bio: {new_bio}')
+        avatar_pic_file = request.files['avatar_pic']
+
+        ### SAVING THE IMAGE TO S3 IF NECESSARY
+        file_s3_url = ""
+        if avatar_pic_file and allowed_file(avatar_pic_file.filename):
+            ## if there is a new avatar image we will upload it to S3
+            file_s3_url = upload_file_to_s3(file=avatar_pic_file)
+
+        new_user_info = {
+            "username": new_username,
+            "email": new_email,
+            "about_me":new_bio,
+            "url":file_s3_url,
+            "current_user":current_user
+        }
+
+        ## Create a diff calculator to check if user has updated any info
+        ## before calling rhe database for saving
+
+        update_user_info(user_info=new_user_info)
+
+        return redirect(url_for('users.my_account', user_id=current_user.id ))
 
 
 
-
+    print(f'form errors: {edit_form.errors}')
     return render_template('account.html', user=user,
                            user_id=user.id,
                            posts=posts,title=title,

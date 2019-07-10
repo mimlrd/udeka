@@ -2,7 +2,9 @@
 
 from flask_wtf import FlaskForm
 from wtforms.validators import DataRequired, Email, Length, EqualTo
-from wtforms import StringField, SubmitField, PasswordField, BooleanField, TextAreaField
+from flask_wtf.file import FileAllowed
+from wtforms import (StringField, SubmitField, PasswordField,
+                     BooleanField, TextAreaField, FileField)
 from eduka.models import User ## To check the curent user
 from flask_login import current_user
 
@@ -57,11 +59,12 @@ class EditProfileForm(FlaskForm):
     email = StringField("Changer d'email", validators=[DataRequired(), Email()])
     username = StringField("Nom d'utilisateur", validators=[DataRequired()])
     bio = TextAreaField('À propos de vous:')
-    new_pwd = PasswordField('Nouveau mot de passe', validators=[Length(min=8)])
-    confirm_new_pwd = PasswordField('Retaper le mot de passe',
-                              validators=[EqualTo(fieldname='password',
-                                                  message='Mot de passe doit être pareil!')])
-    submit = SubmitField("Mettre à jour")
+    avatar_pic = FileField('Mettre à jour votre avatar', validators=[FileAllowed(['jpg', 'png', 'jpeg'])])
+    # new_pwd = PasswordField('Nouveau mot de passe', validators=[Length(min=8)])
+    # confirm_new_pwd = PasswordField('Retaper le mot de passe',
+    #                           validators=[EqualTo(fieldname='new_pwd',
+    #                                               message='Mot de passe doit être pareil!')])
+    update_submit = SubmitField("Mettre à jour")
 
     ############################ CUSTOM VALIDATORS ################################################
 
