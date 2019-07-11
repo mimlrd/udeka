@@ -64,10 +64,10 @@
         <div class="row">
           <div class="columns">
 
-            <div class="column is-4-widescreen">
+            <div class="column is-2-widescreen">
               {# LEFT SIDE #}
               <section class="section">
-                <h3 class="title is-3"> Filtrer par:</h3>
+                <h3 class="subtitle is-4"> Filtrer par:</h3>
                 {# start of the card - need to change this for a table #}
                 <div class="menu">
                   <ul class="menu-list">
@@ -84,9 +84,9 @@
 
 
             {# ********** RIGHT SIDE  ************** #}
-            <div class="column is-8">
+            <div class="column is-10">
               <section class="section">
-                <h3 class="title is-3"> Mes collections</h3>
+                <h3 class="subtitle is-4"> Mes collections</h3>
                 {# we will dive the different columns#}
                 <div class="columns is-multiline">
                   {# start the for loop to get all the posts #}
@@ -96,7 +96,7 @@
                       <div class="card">
                         <div class="card-image">
                           <figure class="image is-4by3">
-                            <img src="{{ post.post_image_link }}" alt="Placeholder image">
+                            <img src="{{ post.post_image_link }}" alt="Post Image">
                           </figure>
                         </div>
                         <div class="card-content">
@@ -110,7 +110,7 @@
                           <div class="content">
                             {{ post.summary|truncate(70, True)|safe }}
                           </div>
-                          <a href="{{ url_for('posts.show_post',post_id=post.id)}}" class="button is-primary issmall">Voir collection</a>
+                          <a href="{{ url_for('posts.show_post',post_public_id=post.public_id)}}" class="button is-primary issmall">Voir collection</a>
                         </div>
                       </div>
                       {# end of the card #}

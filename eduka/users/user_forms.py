@@ -1,7 +1,7 @@
 ## user_forms.py in users folder
 
 from flask_wtf import FlaskForm
-from wtforms.validators import DataRequired, Email, Length, EqualTo
+from wtforms.validators import DataRequired, Email, Length, EqualTo, Regexp
 from flask_wtf.file import FileAllowed
 from wtforms import (StringField, SubmitField, PasswordField,
                      BooleanField, TextAreaField, FileField)
@@ -22,7 +22,11 @@ class LoginForm(FlaskForm):
 class RegistrationForm(FlaskForm):
 
     email = StringField('Email', validators=[DataRequired(), Email()])
-    username = StringField("Nom d'utilisateur", validators=[DataRequired()])
+    username = StringField("Nom d'utilisateur",
+                           validators=[DataRequired(), Length(min=1, max=64),
+                            Regexp('^[A-Za-z][A-Za-z0-9_.]*$', 0,
+               'Usernames must have only letters, numbers, dots or '
+               'underscores')])
     password = PasswordField('Mot de passe', validators=[Length(min=8)])
     re_password = PasswordField('Retaper mot de passe',
                               validators=[EqualTo(fieldname='password',
@@ -57,9 +61,13 @@ class RegistrationForm(FlaskForm):
 class EditProfileForm(FlaskForm):
 
     email = StringField("Changer d'email", validators=[DataRequired(), Email()])
-    username = StringField("Nom d'utilisateur", validators=[DataRequired()])
+    username = StringField("Nom d'utilisateur",
+                           validators=[DataRequired(), Length(min=1, max=64),
+                            Regexp('^[A-Za-z][A-Za-z0-9_.]*$', 0,
+               'Usernames must have only letters, numbers, dots or '
+               'underscores')])
     bio = TextAreaField('À propos de vous:')
-    avatar_pic = FileField('Mettre à jour votre avatar', validators=[FileAllowed(['jpg', 'png', 'jpeg'])])
+    avatar_pic = FileField('Mettre à jour votre avatar', validators=[FileAllowed(['jpg', 'png', 'jpeg', 'tiff', 'svg'])])
     # new_pwd = PasswordField('Nouveau mot de passe', validators=[Length(min=8)])
     # confirm_new_pwd = PasswordField('Retaper le mot de passe',
     #                           validators=[EqualTo(fieldname='new_pwd',

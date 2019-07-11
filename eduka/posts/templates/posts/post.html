@@ -15,33 +15,70 @@
       </div>
     </section>
 
-    <div class="container-fluid"  >
-      <div class="row">
+    <div class="container"  >
+
         <div class="columns">
 
           <!-- LEFT COLUMN -->
           <div class="column is-2">
             <!-- // show the category and the social  -->
             <div class="container">
-              <div class="bd-example mt-3">
+              <div class="tags">
 
                 {% for tag in tags %}
-
-                    {% if loop.index == 1 %}
-                    <a href="#" class="tag is-link">{{ tag }}</a>
-                    {% elif loop.index == 2 %}
-                    <a href="#" class="tag is-primary">{{ tag }}</a>
-                    {% elif loop.index == 3 %}
-                    <a href="#" class="tag is-warning">{{ tag }}</a>
-                    {% else %}
-                    <a href="#" class="tag is-dange">{{ tag }}</a>
-
-                    {% endif %}
+                <a href="#" class="tag">{{ tag }}</a>
                 {% endfor %}
+
               </div>
-              <div class="bd-example mt-3">
-                <p><small class="text-muted">views:</small> {{ views }} fois</p>
+              <!--- Adding the social buttons here -->
+              <hr>
+              <div class="columns is-vcentered">
+                <div class="column is-one-quarter" >
+
+                  {% if current_user.had_clapped_post(post) %}
+                  <a href="{{ url_for('users.clap_action', post_public_id=post.public_id, action='unclap') }}" class="button">
+                    <span class="icon">
+                      <i class="fas fa-heart"></i>
+                    </span>
+                  </a>
+                  {% else %}
+                  <a href="{{ url_for('users.clap_action', post_public_id=post.public_id, action='clap') }}" class="button">
+                    <span class="icon">
+                      <i class="far fa-heart"></i>
+                    </span>
+                  </a>
+
+                  {%endif%}
+
+
+                </div>
+                <div class="column">
+                  <p> <span>{{post.claps.count()}}</span></p>
+                </div>
               </div>
+
+              <div class="columns is-vcentered">
+                <div class="column">
+                  <a href="#" class="button">
+                    <span class="icon">
+                      <i class="fab fa-twitter"></i>
+                    </span>
+                  </a>
+                </div>
+              </div>
+
+              <div class="columns is-vcentered">
+                <div class="column">
+                  <a href="#" class="button">
+                    <span class="icon">
+                      <i class="fab fa-facebook"></i>
+                    </span>
+                  </a>
+                </div>
+              </div>
+
+
+              <!---// Adding the social buttons here -->
             </div>
           </div>
 
@@ -54,7 +91,7 @@
             <p class="subtitle is-6"><small class="text-muted">{{ post.date_posted | datetimeformat }}</small></p>
             {% if author.id == current_user.id %}
             <div class="u-margin-bottom-small">
-              <a href="{{ url_for('posts.update_post', post_id=post.id) }}" class="button is-primary is-outlined"> Update</a>
+              <a href="{{ url_for('posts.update_post', post_public_id=post.public_id) }}" class="button is-primary is-outlined"> Update</a>
               <a href="#" class="button is-danger">Delete</a>
             </div>
 
@@ -107,39 +144,36 @@
 
                   <!-- RIGHT COLUMN -->
                   <div class="column is-2">
-                    <!-- // show number of views and posted by:  -->
                     <div class="container">
 
-                      <div class="bd-example mt-3">
-                        <p><small class="text-muted">added by:</small>
-                          <a href=" {{ url_for('users.my_account', user_id=author.id) }}">
-                            {{ author.username }}
-                          </a>
-                        </p>
+                      <div class="columns is-vcentered">
+                        <div class="column">
+                          <!-- // show number of views and posted by:  -->
+                              <p><small class="text-muted">added by:</small>
+                                <a href=" {{ url_for('users.my_account', public_id=author.public_id) }}">
+                                  {{ author.username }}
+                                </a>
+                              </p>
+                        </div>
                       </div>
 
-                      <div class="bd-example mt-1">
-                        <p><small class="text-muted">views:</small> {{ views }} fois</p>
+                      <hr>
+                      <!-- second row -->
+                      <div class="columns is-vcentered">
+                        <div class="column">
+                          <p><small class="text-muted">views:</small> {{ views }} fois</p>
+                        </div>
                       </div>
+
+
 
                     </div>
-
-
                   </div>
-
-
-
 
 
         </div>
 
 
-
-
-
-
-
-      </div>
     </div>
 
 

@@ -54,7 +54,7 @@ def login():
 
             '''
 
-            return redirect(url_for('users.my_account', user_id=usr.id))
+            return redirect(url_for('users.my_account', public_id=usr.public_id))
 
         else:
             flash(" The user doen't exist or the credentials are not correct, please try again!", 'danger')
@@ -99,20 +99,20 @@ def logout():
 ######################################################
 
 
-@users_blueprint.route('/<int:user_id>/account', methods=['GET', 'POST'])
+@users_blueprint.route('/<string:public_id>/account', methods=['GET', 'POST'])
 @login_required
-def my_account(user_id):
+def my_account(public_id):
 
     title = "Ma page de profile"
     edit_form = EditProfileForm()
     ## The current_user is automatically passsed to the jinja template
     ## we need to to get the current_user Posts
 
-    user = User.query.get_or_404(user_id)
+    user = User.query.filter(User.public_id==public_id).first()
     ## get all posts for the user in a descending order
     ## we could do it in one line, but prefer multiple
     ## lines to minimise mistakes
-    p = Post.query.filter_by(user_id=user_id)
+    p = Post.query.filter_by(user_id=user.id)
     p_desc = p.order_by(Post.date_posted.desc())
     posts = p_desc.all()
 
@@ -147,16 +147,39 @@ def my_account(user_id):
 
         update_user_info(user_info=new_user_info)
 
-        return redirect(url_for('users.my_account', user_id=current_user.id ))
+        return redirect(url_for('users.my_account', public_id=current_user.public_id))
 
-
-
-    print(f'form errors: {edit_form.errors}')
+    #print(f'form errors: {edit_form.errors}')
     return render_template('account.html', user=user,
                            user_id=user.id,
                            posts=posts,title=title,
                            form = edit_form)
 
+
+@users_blueprint.route('/clap/<string:post_public_id>/<action>')
+def clap_action(post_public_id, action):
+    ## clap the post
+
+    post = Post.query.filter(Post.public_id == post_public_id).first()
+    if action == 'clap' and current_user.is_authenticated:
+        ## we will need to update the postclap with the
+        ## current_user public_id
+        current_user.clap_post(post)
+        db.session.commit()
+
+    elif action == 'unclap' and current_user.is_authenticated:
+        current_user.unclap_post(post)
+        db.session.commit()
+    else:
+        ## here we will redirect user to authenticate
+        return redirect(url_for('users.login'))
+
+    # referrer = request.headers.get("Referer")
+    url = request.values.get("url") or request.headers.get("Referer")
+    #print(url)
+
+    response = redirect(url)
+    return response
 
 
 

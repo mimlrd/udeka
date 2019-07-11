@@ -98,12 +98,12 @@ def add_post():
 
 
 
-@posts_blueprint.route('/post/<int:post_id>')
-def show_post(post_id):
+@posts_blueprint.route('/post/<string:post_public_id>')
+def show_post(post_public_id):
 
     ## let get the post
 
-    post = Post.query.get_or_404(post_id)
+    post = Post.query.filter(Post.public_id==post_public_id).first_or_404()
     author = User.query.filter(User.id == post.user_id).first_or_404()
     postlinks = post.links
     views = 0
@@ -141,11 +141,11 @@ def show_post(post_id):
 
 
 
-@posts_blueprint.route('/update/<int:post_id>',methods=['GET', 'POST'])
+@posts_blueprint.route('/update/<string:post_public_id>',methods=['GET', 'POST'])
 @login_required
-def update_post(post_id):
+def update_post(post_public_id):
     form = AddPostForm()
-    post = Post.query.get_or_404(post_id)
+    post = Post.query.filter(Post.public_id==post_public_id).first_or_404()
     nbr_links = len(post.links)
 
     if current_user.id != post.user_id:

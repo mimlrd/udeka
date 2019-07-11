@@ -2,14 +2,28 @@
 
 
 from eduka import db, login_manager
-from flask_login import UserMixin
+from flask_login import UserMixin, AnonymousUserMixin
 from werkzeug.security import check_password_hash, generate_password_hash
 from datetime import datetime as dt
+import shortuuid
+
 
 ##load the current user
 @login_manager.user_loader
 def load_user(user_id):
     return User.query.get(user_id)
+
+class PostClap(db.Model):
+
+    '''
+    Adding social to the post, allow users to like a post
+    '''
+    __tablename__ = 'postclaps'
+
+    id = db.Column(db.Integer, primary_key=True)
+    post_id = db.Column(db.Integer, db.ForeignKey('posts.id'))
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+    timestamp = db.Column(db.DateTime, default=dt.utcnow)
 
 
 class User(db.Model, UserMixin):
@@ -23,31 +37,72 @@ class User(db.Model, UserMixin):
     __tablename__ = 'users'
 
     id = db.Column(db.Integer, primary_key=True)
+    public_id = db.Column(db.String(80), unique=True, index=True)
     profile_image_link = db.Column(db.String(350), nullable=True,
                                     default=default_profile_link)
     email = db.Column(db.String(80), unique=True, nullable=False, index=True)
     username = db.Column(db.String(80), unique=True, nullable=False, index=True)
     bio = db.Column(db.Text(), default=default_bio)
-    # member_since = db.Column(db.DateTime(), default=datetime.utcnow)
-    #updated = db.Column(db.DateTime(), default=datetime.utcnow)
+    member_since = db.Column(db.DateTime(), default=dt.utcnow)
+    updated_date = db.Column(db.DateTime(), default=dt.utcnow)
+    confirmed = db.Column(db.Boolean, default=False)
     ## see following links:
     ## https://github.com/miguelgrinberg/flasky/blob/master/app/models.py
     hash_password = db.Column(db.String(256))
     # This connects Posts to a User Author.
     posts = db.relationship('Post', backref='author', lazy=True)
 
+    liked = db.relationship('PostClap',
+                            foreign_keys=[PostClap.user_id],
+                            backref='user',
+                            lazy='dynamic',
+                            cascade='all, delete-orphan')
+
+
     def __init__(self, email, username, pwd, bio=None, profile_image_link=None):
-        self.email = email
+        self.public_id = self.__create_public_id()
+        self.email = email.lower()
         self.username = username.lower()
         self.bio = bio
         self.profile_image_link = profile_image_link
-        self.hash_password = generate_password_hash(pwd)
+        self.hash_password = generate_password_hash(pwd, method="sha256")
+
+    @staticmethod
+    def __create_public_id(self):
+        if self.public_id is None:
+            return str(shortuuid.uuid())
 
     def __repr__(self):
         return f'Username: {self.username} and email: {self.email}'
 
     def check_password(self, pwd):
         return check_password_hash(self.hash_password, pwd)
+
+    def clap_post(self, post):
+        if not self.had_clapped_post(post):
+            like = PostClap(user_id=self.id, post_id=post.id)
+            db.session.add(like)
+
+    def unclap_post(self, post):
+        if self.had_clapped_post(post):
+            PostClap.query.filter_by(
+                user_id=self.id,
+                post_id=post.id).delete()
+
+    def had_clapped_post(self, post):
+        return PostClap.query.filter(
+            PostClap.user_id == self.id,
+            PostClap.post_id == post.id).count() > 0
+
+class AnonimousUser(AnonymousUserMixin):
+
+    def __init__(self):
+        self.username = 'Guest'
+
+    def had_clapped_post(self, post):
+        return 0
+
+login_manager.anonymous_user = AnonimousUser
 
 
 class Post(db.Model):
@@ -63,8 +118,9 @@ class Post(db.Model):
     default_post_img_link = "https://cdn.pixabay.com/photo/2019/05/01/21/39/programming-4172154_960_720.jpg"
 
     id = db.Column(db.Integer, primary_key=True)
+    public_id = db.Column(db.String(80), unique=True)
     date_posted = db.Column(db.DateTime, index=True, default=dt.utcnow)
-    #date_updated = db.Column(db.DateTime(), default=datetime.utcnow)
+    date_updated = db.Column(db.DateTime(), default=dt.utcnow)
     title = db.Column(db.String(200), unique=False, nullable=False)
     summary = db.Column(db.Text(), nullable=False)
     date_start = db.Column(db.DateTime, default=dt.utcnow)
@@ -89,10 +145,13 @@ class Post(db.Model):
                            backref=db.backref('posts', lazy=True))
     links = db.relationship('PostLink', backref='post_link', lazy=True)
     nbr_views = db.relationship('PostView', backref='post_view', lazy=True)
+    claps = db.relationship('PostClap', backref='post', lazy='dynamic')
+
 
     def __init__(self, title, summary,level_beg,
                  level_end, privacy_level, user_id, date_end, date_start=None):
 
+        self.public_id = create_public_id()
         self.title = title;
         self.summary = summary;
         self.date_start = date_start;
@@ -105,6 +164,11 @@ class Post(db.Model):
 
     def __repr__(self):
         return f'Post title: {self.title} and started at level:{self.level_beg}'
+
+    @staticmethod
+    def create_public_id(self):
+        if self.public_id is None:
+            return str(shortuuid.uuid())
 
 
 class Tag(db.Model):
@@ -126,6 +190,8 @@ post_tags = db.Table('post_tags', db.Model.metadata,
                           db.ForeignKey('posts.id'),
                           primary_key=True)
                 )
+
+
 
 
 class PostLink(db.Model):
@@ -152,6 +218,27 @@ class PostLink(db.Model):
 
     def __repr__(self):
         return f'Post id:{self.post_id} and link is: {self.link_url}'
+
+#
+# class PostTotalClaps(db.Model):
+#     '''
+#     Counting the number of likes for each post
+#     '''
+#     posts = db.relationship(Post)
+#     __tablename__ = 'posttotallikes'
+#     id = db.Column(db.Integer, primary_key=True)
+#     nbr_likes = db.Column(db.Integer, default=0)
+#     post_id = db.Column(db.Integer, db.ForeignKey('posts.id'), nullable=False)
+#
+#     def __init__(self, post_id):
+#         self.post_id = post_id
+#         if self.nbr_likes is None:
+#             self.nbr_likes = 0
+#         else:
+#             self.nbr_likes+=1
+#
+#     def __repr__(self):
+#         return f'Post id: {self.post_id} number of like: {self.nbr_likes} times'
 
 
 class PostView(db.Model):
