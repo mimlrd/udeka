@@ -6,6 +6,7 @@
 '''
 from eduka import db
 from eduka.models import User, Post, PostLink, PostView, Tag
+from datetime import datetime as dt
 
 
 ## saving post to database
@@ -17,14 +18,14 @@ def saving_post(post):
 
 ## get the tags
 def add_tags(tag):
-    existing_tag = Tag.query.filter(Tag.name == tag.lower().strip()).one_or_none()
+    existing_tag = Tag.query.filter(Tag.name == tag.lower()).one_or_none()
     """if it does return existing tag objec to list"""
     if existing_tag is not None:
         return existing_tag
     else:
-       new_tag = Tag()
-       new_tag.name = tag.lower()
-       return new_tag
+        new_tag = Tag()
+        new_tag.name = tag.lower()
+        return new_tag
 
 
 ## saving post links
@@ -128,6 +129,7 @@ def update_user_info(user_info):
     current_user.username = new_username;
     current_user.email = new_email;
     current_user.bio = new_bio;
+    current_user.updated_date = dt.utcnow();
     ## To avoid saving and empty link, check if user has
     ## uploaded a new avatar picture first
     if avatar_url:

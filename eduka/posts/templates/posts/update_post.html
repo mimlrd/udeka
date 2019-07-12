@@ -209,6 +209,7 @@
               </div>
 
             {{ form.submit(class='button is-primary') }}
+            <a href="{{url_for('posts.show_post', post_public_id=post.public_id)}}" class="button is-primary is-outlined">Annuler</a>
 
 
           </form>

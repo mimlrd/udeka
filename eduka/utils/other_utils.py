@@ -3,7 +3,7 @@
 from flask import Blueprint
 
 
-ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg', 'gif'])
+ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg', 'gif', 'svg'])
 
 def allowed_file(filename):
     return '.' in filename and \
@@ -20,6 +20,7 @@ def populate_form(post, form):
     form.end_date.data = post.date_end;
     form.start_level.data = post.level_beg;
     form.end_level.data = post.level_end;
+    form.post_privacy.data = post.privacy_level
 
     tags = []
     for t in post.tags:

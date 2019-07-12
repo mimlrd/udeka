@@ -178,11 +178,14 @@ def update_post(post_public_id):
         post.level_end = request.form['end_level']
         post_tags = request.form['post_tags']
         post.privacy_level = request.form['post_privacy']
+        post.date_updated = dt.utcnow()
         ## updating tags
-        tags = post_tags.split(",")
+        tags = post_tags.split(", ")
         for tag in tags:
-            tag.strip()
-            post_tag = add_tags(tag.lower())
+            #tag.strip()
+            ## to remove all whitespaces
+            n_tag = ''.join(tag.split())
+            post_tag = add_tags(n_tag.lower())
             print(post_tag)
             post.tags.append(post_tag)
 
@@ -191,10 +194,11 @@ def update_post(post_public_id):
         ## check to see if there have been changes and save links
         ## if necessary
         update_links(post_links=post.links,
-                     new_links=new_links, post_id=post_id)
+                     new_links=new_links, post_id=post.id)
 
         ### do a return to the post view page
-        return redirect(url_for('posts.show_post', post_id=post.id))
+        return redirect(url_for('posts.show_post',
+                                post_public_id=post.public_id))
 
 
     return render_template('update_post.html', form=form,

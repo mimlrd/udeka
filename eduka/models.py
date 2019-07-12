@@ -31,18 +31,20 @@ class User(db.Model, UserMixin):
     '''
     User class that will determine ...
     '''
-    default_bio = "Utilisateur n'a pas encore ajouter un bio "
-    default_profile_link = "https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909_960_720.png"
+    DEFAULT_BIO = "Utilisateur n'a pas encore ajouter un bio "
+    DEFAULT_PROFILE_LINK = "https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909_960_720.png"
+    USR_PUBLIC_IDX = str(shortuuid.uuid())
 
     __tablename__ = 'users'
 
     id = db.Column(db.Integer, primary_key=True)
-    public_id = db.Column(db.String(80), unique=True, index=True)
+    public_id = db.Column(db.String(80), unique=True,
+                          index=True, default=USR_PUBLIC_IDX)
     profile_image_link = db.Column(db.String(350), nullable=True,
-                                    default=default_profile_link)
+                                    default=DEFAULT_PROFILE_LINK)
     email = db.Column(db.String(80), unique=True, nullable=False, index=True)
     username = db.Column(db.String(80), unique=True, nullable=False, index=True)
-    bio = db.Column(db.Text(), default=default_bio)
+    bio = db.Column(db.Text(), default=DEFAULT_BIO)
     member_since = db.Column(db.DateTime(), default=dt.utcnow)
     updated_date = db.Column(db.DateTime(), default=dt.utcnow)
     confirmed = db.Column(db.Boolean, default=False)
@@ -59,17 +61,24 @@ class User(db.Model, UserMixin):
                             cascade='all, delete-orphan')
 
 
+
+
     def __init__(self, email, username, pwd, bio=None, profile_image_link=None):
-        self.public_id = self.__create_public_id()
+        #self.public_id = self.__create_public_id()
         self.email = email.lower()
         self.username = username.lower()
         self.bio = bio
         self.profile_image_link = profile_image_link
         self.hash_password = generate_password_hash(pwd, method="sha256")
+        #self.updated_date = dt.utcnow
+
+        if self.public_id is None:
+            # print("setting public_id")
+            self.public_id = str(shortuuid.uuid())
 
     @staticmethod
-    def __create_public_id(self):
-        if self.public_id is None:
+    def __create_public_id():
+        if User.public_id is None:
             return str(shortuuid.uuid())
 
     def __repr__(self):
@@ -115,10 +124,13 @@ class Post(db.Model):
     '''
     __tablename__ = 'posts'
 
-    default_post_img_link = "https://cdn.pixabay.com/photo/2019/05/01/21/39/programming-4172154_960_720.jpg"
+    DEFAULT_POST_IMG_LINK = "https://cdn.pixabay.com/photo/2019/05/01/21/39/programming-4172154_960_720.jpg"
+    POST_PUBLIC_IDX = str(shortuuid.uuid())
 
     id = db.Column(db.Integer, primary_key=True)
-    public_id = db.Column(db.String(80), unique=True)
+    public_id = db.Column(db.String(80),
+                          unique=True, default=POST_PUBLIC_IDX)
+
     date_posted = db.Column(db.DateTime, index=True, default=dt.utcnow)
     date_updated = db.Column(db.DateTime(), default=dt.utcnow)
     title = db.Column(db.String(200), unique=False, nullable=False)
@@ -137,7 +149,7 @@ class Post(db.Model):
     ##---> tags need to be indexed, so users could search (query) easily by tag
     ##category = db.Column(db.String(), default='IT')
     post_image_link = db.Column(db.String(350), nullable=True,
-                                default=default_post_img_link)
+                                default=DEFAULT_POST_IMG_LINK)
     ##nbr_views = db.Column(db.Integer, default=0)
     # Connect this table with other tables such as users and links
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
@@ -151,7 +163,6 @@ class Post(db.Model):
     def __init__(self, title, summary,level_beg,
                  level_end, privacy_level, user_id, date_end, date_start=None):
 
-        self.public_id = create_public_id()
         self.title = title;
         self.summary = summary;
         self.date_start = date_start;
@@ -160,15 +171,13 @@ class Post(db.Model):
         self.level_end = level_end;
         self.privacy_level = privacy_level;
         self.user_id = user_id
-        ##self.date_posted = dt.utcnow
+        self.date_updated = dt.utcnow
+
+        if self.public_id is None:
+            self.public_id = str(shortuuid.uuid())
 
     def __repr__(self):
         return f'Post title: {self.title} and started at level:{self.level_beg}'
-
-    @staticmethod
-    def create_public_id(self):
-        if self.public_id is None:
-            return str(shortuuid.uuid())
 
 
 class Tag(db.Model):
@@ -218,27 +227,6 @@ class PostLink(db.Model):
 
     def __repr__(self):
         return f'Post id:{self.post_id} and link is: {self.link_url}'
-
-#
-# class PostTotalClaps(db.Model):
-#     '''
-#     Counting the number of likes for each post
-#     '''
-#     posts = db.relationship(Post)
-#     __tablename__ = 'posttotallikes'
-#     id = db.Column(db.Integer, primary_key=True)
-#     nbr_likes = db.Column(db.Integer, default=0)
-#     post_id = db.Column(db.Integer, db.ForeignKey('posts.id'), nullable=False)
-#
-#     def __init__(self, post_id):
-#         self.post_id = post_id
-#         if self.nbr_likes is None:
-#             self.nbr_likes = 0
-#         else:
-#             self.nbr_likes+=1
-#
-#     def __repr__(self):
-#         return f'Post id: {self.post_id} number of like: {self.nbr_likes} times'
 
 
 class PostView(db.Model):
