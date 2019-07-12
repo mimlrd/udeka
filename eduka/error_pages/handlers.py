@@ -1,4 +1,5 @@
 ## handlers.py for error pages
+# -*- coding: utf-8 -*-
 
 
 # handlers.py

@@ -1,4 +1,5 @@
 ## config.py
+# -*- coding: utf-8 -*-
 
 '''
   "Configuration for the app"
@@ -12,7 +13,7 @@ import os
 import secrets
 from dotenv import load_dotenv
 
-#basedir = os.path.abspath(os.path.dirname(__file__))
+basedir = os.path.abspath(os.path.dirname(__file__))
 
 # OR, explicitly providing path to '.env'
 from pathlib import Path  # python3 only
@@ -28,7 +29,8 @@ class Config:
         raise ValueError("No secret key set for Flask application")
     ##SECRET_KEY = os.environ.get('SECRET_KEY') or b'_5#y2L"F4Q8z\n\xec]/'
     #SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join(basedir, 'data.sqlite')
-    SQLALCHEMY_DATABASE_URI = os.environ.get("SQLALCHEMY_DATABASE_URI")
+    SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL') or \
+        'sqlite:///' + os.path.join(basedir, 'data.sqlite')
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 
     ## AWS S3

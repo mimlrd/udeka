@@ -1,4 +1,5 @@
 ## database_utils.py
+# -*- coding: utf-8 -*-
 
 '''
  A utils to interact with the database.

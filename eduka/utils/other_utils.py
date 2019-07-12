@@ -1,4 +1,5 @@
 ## create utils for the app
+# -*- coding: utf-8 -*-
 
 from flask import Blueprint
 

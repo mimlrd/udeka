@@ -1,4 +1,5 @@
 ## create filters for the app
+# -*- coding: utf-8 -*-
 from datetime import datetime as dt
 #from app import app
 

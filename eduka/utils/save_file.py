@@ -1,4 +1,5 @@
 ## saving pictures and other items
+# -*- coding: utf-8 -*-
 import os
 import secrets
 import io

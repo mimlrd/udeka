@@ -1,4 +1,5 @@
 ## views.py inside users folder
+# -*- coding: utf-8 -*-
 
 
 from flask import (Blueprint, render_template, url_for,

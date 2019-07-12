@@ -1,4 +1,5 @@
 ## app.py
+# -*- coding: utf-8 -*-
 import os
 from eduka import create_app
 

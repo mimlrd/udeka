@@ -1,4 +1,5 @@
 ## models.py
+# -*- coding: utf-8 -*-
 
 
 from eduka import db, login_manager

@@ -1,4 +1,5 @@
 ## post_form.py inside the posts folder
+# -*- coding: utf-8 -*-
 
 from wtforms.validators import DataRequired
 from flask_wtf import FlaskForm

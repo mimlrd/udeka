@@ -1,4 +1,5 @@
 ## views.py in core
+# -*- coding: utf-8 -*-
 
 from flask import Blueprint, render_template, redirect, flash
 from eduka.models import Post

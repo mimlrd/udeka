@@ -1,4 +1,5 @@
 ## user_forms.py in users folder
+# -*- coding: utf-8 -*-
 
 from flask_wtf import FlaskForm
 from wtforms.validators import DataRequired, Email, Length, EqualTo, Regexp
