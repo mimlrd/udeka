@@ -172,7 +172,7 @@ class Post(db.Model):
         self.level_end = level_end;
         self.privacy_level = privacy_level;
         self.user_id = user_id
-        self.date_updated = dt.utcnow
+        #self.date_updated = dt.utcnow
 
         if self.public_id is None:
             self.public_id = str(shortuuid.uuid())

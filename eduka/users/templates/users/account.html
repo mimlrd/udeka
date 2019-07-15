@@ -4,6 +4,7 @@
 
 {% block content %}
     <!----- Slidding right section --->
+    {% if current_user.id == user.id %}
     <div class="slide-in from-right">
       <div class="slide-in-content">
         {% with user=user, form=form %}
@@ -11,6 +12,7 @@
         {% endwith %}
       </div>
     </div>
+    {% endif %}
     <!----- //Slidding right section --->
 
     <section class="hero is-prime-color">

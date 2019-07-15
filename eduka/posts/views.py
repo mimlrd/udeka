@@ -61,17 +61,19 @@ def add_post():
                     level_beg=level_beg, level_end=level_end,
                     privacy_level=privacy_level, user_id=author_id)
 
-        ## removing all the spaces
-        post_tags.split(",")
-        tags = post_tags.split(",")
-        for tag in tags:
-            tag.strip()
-            post_tag = add_tags(tag.lower())
-            #print(post_tag)
-            post.tags.append(post_tag)
-
         ## saving posts using the database_utils
         saving_post(post)
+
+        # removing all the spaces
+        post_tags.split(", ")
+        tags = post_tags.split(",")
+        for tag in tags:
+            n_tag = ''.join(tag.split())
+            post_tag = add_tags(n_tag.lower())
+            print(post_tag)
+            post.tags.append(post_tag)
+
+        db.session.commit()
 
         ## saving links
         saving_links(links=post_links, titles=post_link_titles, post_id=post.id)
@@ -84,7 +86,7 @@ def add_post():
         form.post_title.data = '';
         form.post_summary.data = '';
         form.start_date.data = dt.now();
-        form.end_date.data = dt.now();
+        form.end_date.data = dt.now() + seven_days;
         form.start_level.data = 'bg';
         form.end_level.data = 'exp';
         form.post_privacy.data = 'pbl';

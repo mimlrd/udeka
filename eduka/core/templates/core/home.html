@@ -9,24 +9,41 @@
       <section class="hero is-prime-color is-section1" id="section1">
         <div class="hero-body">
           <div class="container">
-            <div class="columns is-desktop is-vcentered">
+            <div class="columns is-vcentered">
 
-              <div class="column is-two-fifths">
-                {# Column left for the text#}
-                <h1 class="title is-1">  La nouvelle façon d'organiser les infos pertinentes par thème.</h1>
-                <div class="content is-medium">
-                  <p >Le site qui vous aide à regrouper, organiser et visualiser toutes
-                    les informations sur un thème/ sujet tous simplement.
-                  </p>
+              <div class="column is-two-fifths-desktop is-full-tablet has-text-left-desktop has-text-centered-mobile has-text-centered-tablet ">
+
+                <div class="columns">
+                  <div class="column">
+                    {# Column left for the text#}
+                    <h1 class="title is-2">  La nouvelle façon d'organiser les infos pertinentes par thème.</h1>
+                    <div class="content is-medium ">
+                      <p >Le site qui vous aide à regrouper, organiser et visualiser toutes
+                        les informations sur un thème/ sujet tous simplement.
+                      </p>
+                    </div>
+
+                  </div>
                 </div>
 
 
-                {% if current_user.is_authenticated %}
-                <a  href="{{url_for('posts.add_post')}}" class="button is-primary">Je crée une collection</a>
-                {% else %}
-                <a href="{{url_for('users.registration')}}" class="button is-info">Je m'inscris gratuitement!</a>
-                <a href="#section-hiw" class="button is-primary is-outlined">Comment ça marche?</a>
-                {% endif %}
+                <div class="colums" >
+                  {% if current_user.is_authenticated %}
+                  <div class="column">
+                    <a  href="{{url_for('posts.add_post')}}" class="button is-primary">Je crée une collection</a>
+                  </div>
+                  {% else %}
+                  <div class="column" >
+                    <a href="{{url_for('users.registration')}}" class="button is-info">Je m'inscris!</a>
+                  </div>
+                  <div class="column">
+                    <a href="#section-hiw" class="button is-primary is-outlined">Comment ça marche?</a>
+                  </div>
+                  {% endif %}
+
+                </div>
+
+
 
 
               </div>
@@ -79,7 +96,7 @@
       <section class="hero" id="section3">
         <div class="hero-body">
           <div class="container">
-            <div class="columns is-desktop is-centered">
+            <div class="columns is-centered">
               <div class="column has-text-centered">
                 <h1 class="title is-1">  Intelligent Et Intuitive.</h1>
                 <div class="content is-medium">
@@ -108,7 +125,7 @@
 
               <div class="columns is-desktop is-vcentered">
 
-                <div class="column is-two-fifths">
+                <div class="column is-two-fifths-desktop is-full-tablet has-text-centered-mobile has-text-centered-tablet">
                   {# Column left for the text#}
                   <h1 class="title is-3">Comment Ça Marche?</h1>
                   <div class="content is-medium">
@@ -228,12 +245,12 @@
 
       <!-------- section rejoignez-nous ------->
 
-      <section class="hero is-warning is-medium is-bold">
+      <section class="hero has-background-warning is-medium is-bold">
         <div class="hero-body">
           <div class="container">
-            <div class="columns is-desktop is-centered">
+            <div class="columns is-centered">
               <div class="column has-text-centered">
-                <h1 class="title is-1"> Commencez à collectionner et à donner tous son sens à l'information</h1>
+                <h1 class="title is-2"> Commencez à collectionner et à donner tous son sens à l'information</h1>
                 {% if current_user.is_authenticated %}
                 <a  href="{{url_for('posts.add_post')}}" class="button is-primary">Je crée une collection</a>
                 {% else %}

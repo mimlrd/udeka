@@ -23,19 +23,18 @@
       <nav class="navbar" role="navigation" aria-label="main navigation">
         <div class="navbar-brand">
           <a class="navbar-item" href="{{ url_for('core.home') }}">
-            <img src="https://bulma.io/images/bulma-logo.png" width="112" height="28">
+            <img src="https://first-rep-eduka.s3.eu-west-3.amazonaws.com/site-logos/eduka_logo_small.png" width="112" height="28">
           </a>
 
-          <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
+          <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navMenu">
             <span aria-hidden="true"></span>
             <span aria-hidden="true"></span>
             <span aria-hidden="true"></span>
           </a>
         </div>
 
-        <div id="navbarBasicExample" class="navbar-menu">
+        <div class="navbar-menu" id="navMenu">
           <div class="navbar-start">
-
             <a class="navbar-item"  href="{{ url_for('core.home') }}">Home</a>
             <a class="navbar-item"  href="{{ url_for('core.about') }}">À propos de</a>
             <a class="navbar-item"  href="{{ url_for('core.show_collections') }}">Collections</a>
@@ -59,8 +58,8 @@
               </div>
             </div>
           </div>
-
         </div>
+
       </nav>
 
     </header>
