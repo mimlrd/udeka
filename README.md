@@ -1,6 +1,6 @@
 # udeka!
 
-This is a project which I am doing for my portfolio.
+Udeka is a personal project of a website that allow a user to bookmark the internet as they learn.
 
 ## Setting up
 
